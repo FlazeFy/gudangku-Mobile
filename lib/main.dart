@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 
@@ -9,12 +10,24 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(scaffoldBackgroundColor: darkColor),
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'GudangKu',
+      theme: ThemeData(
+          scaffoldBackgroundColor: darkColor,
+          textTheme: const TextTheme(
+            bodyText1: TextStyle(color: whiteColor),
+            bodyText2: TextStyle(color: whiteColor),
+          ),
+          dataTableTheme: const DataTableThemeData(
+              dataTextStyle: TextStyle(color: whiteColor),
+              headingTextStyle: TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: spaceMini / 2.2,
+                  fontSize: textLG))),
       home: const BottomBar(),
     );
   }
