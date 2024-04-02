@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/inventory/usecase/soft_delete_inventory.dart';
 
 class GetAllInventory extends StatefulWidget {
   @override
@@ -69,6 +70,7 @@ class StateGetAllInventory extends State<GetAllInventory> {
                 DataColumn(label: Text('Price')),
                 DataColumn(label: Text('Volume')),
                 DataColumn(label: Text('Capacity')),
+                DataColumn(label: Text('Delete'))
               ],
               rows: data.map<DataRow>((dt) {
                 return DataRow(
@@ -87,6 +89,10 @@ class StateGetAllInventory extends State<GetAllInventory> {
                     DataCell(Text("${dt.inventoryVol} ${dt.inventoryUnit}")),
                     DataCell(Text(
                         "${dt.inventoryCapacityVol ?? "-"} ${dt.inventoryCapacityUnit == "percentage" ? "%" : "-"}")),
+                    DataCell(SoftDeleteInventory(
+                      id: dt.id,
+                      inventoryName: dt.inventoryName,
+                    ))
                   ],
                 );
               }).toList(),

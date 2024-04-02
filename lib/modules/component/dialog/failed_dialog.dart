@@ -20,8 +20,9 @@ class StateFailedDialog extends State<FailedDialog> {
     double fullWidth = MediaQuery.of(context).size.width;
 
     return AlertDialog(
-      contentPadding: EdgeInsets.all(spaceSM),
+      contentPadding: const EdgeInsets.all(spaceSM),
       title: null,
+      backgroundColor: darkColor,
       content: SizedBox(
         width: fullWidth,
         height: 320,
@@ -34,32 +35,30 @@ class StateFailedDialog extends State<FailedDialog> {
                     BorderRadius.circular(roundedJumbo + roundedJumbo),
                 child: Image.asset('assets/icon/Failed.png', width: 120),
               ),
-              SizedBox(height: spaceLG),
-              Text("Failed".tr,
-                  style: TextStyle(
-                      color: darkColor,
-                      fontSize: textLG,
-                      fontWeight: FontWeight.bold)),
+              const SizedBox(height: spaceLG),
+              const Text("Failed",
+                  style:
+                      TextStyle(fontSize: textLG, fontWeight: FontWeight.bold)),
               Container(
-                  margin: EdgeInsets.fromLTRB(0, spaceMini, 0, spaceSM),
+                  margin: const EdgeInsets.fromLTRB(0, spaceMini, 0, spaceSM),
                   child: Text(
                       getMessageResponseFromObject(widget.text, widget.type),
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: shadowColor, fontSize: textXMD))),
-              Divider(
+                      style: const TextStyle(fontSize: textXMD))),
+              const Divider(
                 height: spaceMD,
                 color: greyColor,
               ),
               InkWell(
                   onTap: () => Navigator.pop(context, 'OK'),
                   child: Container(
-                    padding: EdgeInsets.all(spaceMD),
-                    margin: EdgeInsets.only(top: spaceMD),
-                    decoration: BoxDecoration(
-                        color: warningBG,
+                    padding: const EdgeInsets.all(spaceMD),
+                    margin: const EdgeInsets.only(top: spaceMD),
+                    decoration: const BoxDecoration(
+                        color: dangerBG,
                         borderRadius:
                             BorderRadius.all(Radius.circular(roundedMD))),
-                    child: Text("Try Again",
+                    child: const Text("Try Again",
                         style: TextStyle(
                             color: whiteColor, fontWeight: FontWeight.w500)),
                   ))
