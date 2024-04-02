@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/inventory/usecase/hard_delete_inventory.dart';
 import 'package:gudangku/views/inventory/usecase/soft_delete_inventory.dart';
 
 class GetAllInventory extends StatefulWidget {
@@ -89,10 +90,15 @@ class StateGetAllInventory extends State<GetAllInventory> {
                     DataCell(Text("${dt.inventoryVol} ${dt.inventoryUnit}")),
                     DataCell(Text(
                         "${dt.inventoryCapacityVol ?? "-"} ${dt.inventoryCapacityUnit == "percentage" ? "%" : "-"}")),
-                    DataCell(SoftDeleteInventory(
-                      id: dt.id,
-                      inventoryName: dt.inventoryName,
-                    ))
+                    DataCell(dt.deletedAt == ""
+                        ? SoftDeleteInventory(
+                            id: dt.id,
+                            inventoryName: dt.inventoryName,
+                          )
+                        : HardDeleteInventory(
+                            id: dt.id,
+                            inventoryName: dt.inventoryName,
+                          ))
                   ],
                 );
               }).toList(),

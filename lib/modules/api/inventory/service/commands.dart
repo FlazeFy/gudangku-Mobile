@@ -25,7 +25,35 @@ class InventoryCommandsService {
 
     var responseData = jsonDecode(response.body);
 
-    print(response);
+    if (response.statusCode == 200) {
+      return [
+        {
+          "message": "success",
+          "body": responseData["message"],
+        }
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": responseData['message']}
+      ];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> hardDeleteInventoryById(String id) async {
+    const token = '33|0DWfzepjZqA1Utxi3X9KQ40vcmKmZdJIatAJtmnq8d0f169f';
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.delete(
+      Uri.parse("$emuUrl/api/v1/inventory/destroy/${id}"),
+      headers: header,
+    );
+
+    var responseData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
       return [
