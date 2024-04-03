@@ -57,6 +57,6 @@ class _TotalInventoryByFavoriteState extends State<TotalInventoryByFavorite> {
   Widget _buildListView(List<PieData> contents) {
     return Container(
         margin: const EdgeInsets.all(spaceSM),
-        child: getPieChart(chartData, 'Total Inventory By Cat'));
+        child: getPieChart(chartData, 'Total Inventory By Favorite'));
   }
 }

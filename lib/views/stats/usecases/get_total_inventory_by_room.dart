@@ -5,13 +5,12 @@ import 'package:gudangku/modules/component/charts/pie_chart.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 
-class TotalInventoryByCategory extends StatefulWidget {
+class TotalInventoryByRoom extends StatefulWidget {
   @override
-  State<TotalInventoryByCategory> createState() =>
-      _TotalInventoryByCategoryState();
+  State<TotalInventoryByRoom> createState() => _TotalInventoryByRoomState();
 }
 
-class _TotalInventoryByCategoryState extends State<TotalInventoryByCategory> {
+class _TotalInventoryByRoomState extends State<TotalInventoryByRoom> {
   List<PieData> chartData = [];
   QueriesStatsService? apiService;
 
@@ -26,7 +25,7 @@ class _TotalInventoryByCategoryState extends State<TotalInventoryByCategory> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService?.getTotalInventoryByCategory(),
+        future: apiService?.getTotalInventoryByRoom(),
         builder: (BuildContext context,
             AsyncSnapshot<List<QueriesPieChartModel>> snapshot) {
           if (snapshot.hasError) {
@@ -57,6 +56,6 @@ class _TotalInventoryByCategoryState extends State<TotalInventoryByCategory> {
   Widget _buildListView(List<PieData> contents) {
     return Container(
         margin: const EdgeInsets.all(spaceSM),
-        child: getPieChart(chartData, 'Total Inventory By Category'));
+        child: getPieChart(chartData, 'Total Inventory By Room'));
   }
 }

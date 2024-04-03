@@ -38,4 +38,21 @@ class QueriesStatsService {
       return [];
     }
   }
+
+  Future<List<QueriesPieChartModel>> getTotalInventoryByRoom() async {
+    const token = '33|0DWfzepjZqA1Utxi3X9KQ40vcmKmZdJIatAJtmnq8d0f169f';
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.get(
+        Uri.parse("$baseUrl/api/v1/stats/total_inventory_by_room"),
+        headers: header);
+    if (response.statusCode == 200) {
+      return queriesPieChartModelFromJson(response.body);
+    } else {
+      return [];
+    }
+  }
 }

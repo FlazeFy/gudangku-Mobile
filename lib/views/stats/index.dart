@@ -4,6 +4,7 @@ import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_category.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_favorite.dart';
+import 'package:gudangku/views/stats/usecases/get_total_inventory_by_room.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({Key? key}) : super(key: key);
@@ -43,7 +44,8 @@ class StateStatsPageState extends State<StatsPage> {
           ],
         ),
         TotalInventoryByCategory(),
-        TotalInventoryByFavorite()
+        TotalInventoryByFavorite(),
+        TotalInventoryByRoom()
       ],
     ));
   }
