@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/inventory/usecase/put_recover_inventory.dart';
 import 'package:gudangku/views/inventory/usecase/put_favorite_toogle.dart';
 import 'package:gudangku/views/inventory/usecase/get_inventory_props.dart';
 import 'package:gudangku/views/inventory/usecase/hard_delete_inventory.dart';
@@ -75,6 +76,7 @@ class StateGetAllInventory extends State<GetAllInventory> {
                 DataColumn(label: Text('Capacity')),
                 DataColumn(label: Text('Info')),
                 DataColumn(label: Text('Favorite')),
+                DataColumn(label: Text('Edit')),
                 DataColumn(label: Text('Delete'))
               ],
               rows: data.map<DataRow>((dt) {
@@ -102,6 +104,12 @@ class StateGetAllInventory extends State<GetAllInventory> {
                       id: dt.id,
                       isFavorite: dt.isFavorite,
                     )),
+                    DataCell(dt.deletedAt != ""
+                        ? PostRecover(
+                            id: dt.id,
+                            inventoryName: dt.inventoryName,
+                          )
+                        : const SizedBox()),
                     DataCell(dt.deletedAt == ""
                         ? SoftDeleteInventory(
                             id: dt.id,

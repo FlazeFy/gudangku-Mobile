@@ -100,4 +100,33 @@ class InventoryCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> putRecoverInventoryById(String id) async {
+    const token = '33|0DWfzepjZqA1Utxi3X9KQ40vcmKmZdJIatAJtmnq8d0f169f';
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.put(
+        Uri.parse("$emuUrl/api/v1/inventory/recover/$id"),
+        headers: header);
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {
+          "message": "success",
+          "body": responseData["message"],
+        }
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": responseData['message']}
+      ];
+    }
+  }
 }
