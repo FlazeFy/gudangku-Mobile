@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/inventory/usecase/put_favorite_toogle.dart';
+import 'package:gudangku/views/inventory/usecase/get_inventory_props.dart';
 import 'package:gudangku/views/inventory/usecase/hard_delete_inventory.dart';
 import 'package:gudangku/views/inventory/usecase/soft_delete_inventory.dart';
 
@@ -71,6 +73,8 @@ class StateGetAllInventory extends State<GetAllInventory> {
                 DataColumn(label: Text('Price')),
                 DataColumn(label: Text('Volume')),
                 DataColumn(label: Text('Capacity')),
+                DataColumn(label: Text('Info')),
+                DataColumn(label: Text('Favorite')),
                 DataColumn(label: Text('Delete'))
               ],
               rows: data.map<DataRow>((dt) {
@@ -90,6 +94,14 @@ class StateGetAllInventory extends State<GetAllInventory> {
                     DataCell(Text("${dt.inventoryVol} ${dt.inventoryUnit}")),
                     DataCell(Text(
                         "${dt.inventoryCapacityVol ?? "-"} ${dt.inventoryCapacityUnit == "percentage" ? "%" : "-"}")),
+                    DataCell(PropsInventory(
+                        createdAt: dt.createdAt,
+                        updatedAt: dt.updatedAt ?? "",
+                        deletedAt: dt.deletedAt ?? "")),
+                    DataCell(FavoriteToogle(
+                      id: dt.id,
+                      isFavorite: dt.isFavorite,
+                    )),
                     DataCell(dt.deletedAt == ""
                         ? SoftDeleteInventory(
                             id: dt.id,
@@ -98,7 +110,7 @@ class StateGetAllInventory extends State<GetAllInventory> {
                         : HardDeleteInventory(
                             id: dt.id,
                             inventoryName: dt.inventoryName,
-                          ))
+                          )),
                   ],
                 );
               }).toList(),

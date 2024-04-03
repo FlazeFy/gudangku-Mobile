@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/modules/helpers/converter.dart';
 

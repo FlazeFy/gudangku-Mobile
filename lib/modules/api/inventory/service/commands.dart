@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 // ignore: depend_on_referenced_packages
-import 'package:get/get.dart';
+import 'package:gudangku/modules/api/inventory/model/commands.dart';
 import 'package:http/http.dart' show Client;
 
 class InventoryCommandsService {
@@ -19,7 +19,7 @@ class InventoryCommandsService {
     };
 
     final response = await client.delete(
-      Uri.parse("$emuUrl/api/v1/inventory/delete/${id}"),
+      Uri.parse("$emuUrl/api/v1/inventory/delete/$id"),
       headers: header,
     );
 
@@ -49,8 +49,40 @@ class InventoryCommandsService {
     };
 
     final response = await client.delete(
-      Uri.parse("$emuUrl/api/v1/inventory/destroy/${id}"),
+      Uri.parse("$emuUrl/api/v1/inventory/destroy/$id"),
       headers: header,
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {
+          "message": "success",
+          "body": responseData["message"],
+        }
+      ];
+    } else {
+      return [
+        {"message": "failed", "body": responseData['message']}
+      ];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> toogleFavInventoryById(
+      String id, FavoriteToogleModel data) async {
+    const token = '33|0DWfzepjZqA1Utxi3X9KQ40vcmKmZdJIatAJtmnq8d0f169f';
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.put(
+      Uri.parse("$emuUrl/api/v1/inventory/fav_toggle/$id"),
+      headers: header,
+      body: favoriteToogleToJson(data),
     );
 
     var responseData = jsonDecode(response.body);
