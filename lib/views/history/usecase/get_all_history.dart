@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/history/model/queries.dart';
 import 'package:gudangku/modules/api/history/service/queries.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/history/usecase/hard_delete_history.dart';
 
 class GetAllHistory extends StatefulWidget {
   @override
@@ -70,16 +71,8 @@ class StateGetAllHistory extends State<GetAllHistory> {
                       "${e.historyType} ${e.historyContext}",
                     )),
                 const Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.delete),
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      foregroundColor: MaterialStateProperty.all(whiteColor),
-                      side: MaterialStateProperty.all(
-                          const BorderSide(color: dangerBG, width: 1.5)),
-                    )),
+                HardDeleteHistory(
+                    id: e.id, ctx: "${e.historyType} ${e.historyContext}")
               ],
             ),
           );
