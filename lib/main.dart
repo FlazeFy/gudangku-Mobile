@@ -2,13 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/login/index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+bool shouldUseFirestoreEmulator = false;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.containsKey("token_key")) {
+    runApp(MyApp(signed: true));
+  } else {
+    runApp(MyApp(signed: false));
+  }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({required this.signed});
+  bool signed;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +40,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   letterSpacing: spaceMini / 2.2,
                   fontSize: textLG))),
-      home: const BottomBar(),
+      home: const LoginPage(),
     );
   }
 }
