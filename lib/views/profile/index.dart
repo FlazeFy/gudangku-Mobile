@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/history/index.dart';
+import 'package:gudangku/views/profile/usecases/get_my_profile.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class StateProfilePageState extends State<ProfilePage> {
         body: ListView(
       padding: const EdgeInsets.only(top: spaceJumbo),
       children: [
+        GetMyProfile(),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: spaceMD),
           decoration: BoxDecoration(

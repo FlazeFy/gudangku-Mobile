@@ -14,6 +14,8 @@ bool shouldUseFirestoreEmulator = false;
 
 Future<void> fireFCMHandler(RemoteMessage message) async {
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
 }

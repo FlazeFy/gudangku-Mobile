@@ -42,7 +42,11 @@ class _PostLoginState extends State<PostLogin> {
           Container(
               margin: const EdgeInsets.only(top: 10),
               alignment: Alignment.bottomRight,
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
+                  icon: Icon(
+                    Icons.login,
+                    color: whiteColor,
+                  ),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -87,7 +91,8 @@ class _PostLoginState extends State<PostLogin> {
                               text: "Login failed, field can't be empty"));
                     }
                   },
-                  child: const Text("Sign In", style: TextStyle(fontSize: 15))))
+                  label: const Text("Sign In",
+                      style: TextStyle(fontSize: 15, color: whiteColor)))),
         ],
       ),
     );
