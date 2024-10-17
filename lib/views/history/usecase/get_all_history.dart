@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/api/history/model/queries.dart';
 import 'package:gudangku/modules/api/history/service/queries.dart';
+import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/history/usecase/hard_delete_history.dart';
 
 class GetAllHistory extends StatefulWidget {
+  const GetAllHistory({super.key});
+
   @override
   StateGetAllHistory createState() => StateGetAllHistory();
 }
@@ -29,7 +31,7 @@ class StateGetAllHistory extends State<GetAllHistory> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiHistoryQuery.getAllHistory(),
+        future: apiHistoryQuery.getAllHistory(pageAllHistory),
         builder: (BuildContext context,
             AsyncSnapshot<List<HistoryAllModel>> snapshot) {
           if (snapshot.hasError) {

@@ -11,8 +11,11 @@ Widget getPieChart(List<PieData> chartData, String title) {
           isVisible: true,
           padding: spaceLG,
           backgroundColor: darkColor,
-          position: LegendPosition.right,
+          position: LegendPosition.bottom,
+          isResponsive: true,
           orientation: LegendItemOrientation.vertical,
+          overflowMode: LegendItemOverflowMode.wrap,
+          shouldAlwaysShowScrollbar: true,
           textStyle: TextStyle(color: whiteColor),
           borderColor: primaryColor),
       series: <CircularSeries>[

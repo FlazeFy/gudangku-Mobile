@@ -7,6 +7,8 @@ import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/modules/helpers/converter.dart';
 
 class GetMyProfile extends StatefulWidget {
+  const GetMyProfile({super.key});
+
   @override
   State<GetMyProfile> createState() => _GetMyProfileState();
 }
@@ -48,14 +50,14 @@ class _GetMyProfileState extends State<GetMyProfile> {
   }
 
   Widget _buildListView(ProfileModel? dt) {
-    if (dt != null && dt!.username != null) {
+    if (dt != null) {
       usernameCtrl!.text = dt.username;
     }
-    if (dt != null && dt!.email != null) {
-      emailCtrl!.text = dt!.email!;
+    if (dt != null) {
+      emailCtrl!.text = dt.email;
     }
     if (dt != null && telegramUserIdCtrl != null) {
-      telegramUserIdCtrl!.text = dt!.telegramUserId!;
+      telegramUserIdCtrl!.text = dt.telegramUserId;
     }
 
     return Container(
@@ -72,7 +74,7 @@ class _GetMyProfileState extends State<GetMyProfile> {
               Text("Joined since ${getItemTimeString(dt?.createdAt)}",
                   style: const TextStyle(
                       fontStyle: FontStyle.italic, fontSize: textMD)),
-              SizedBox(height: spaceMD),
+              const SizedBox(height: spaceMD),
               getInputLabel("Username"),
               getInputTextMain(usernameCtrl, "Username", 36, false),
               getInputLabel("Email"),

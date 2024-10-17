@@ -3,9 +3,8 @@ import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/modules/helpers/converter.dart';
 
 class FailedDialog extends StatefulWidget {
-  FailedDialog({this.text, this.type});
-  // ignore: prefer_typing_uninitialized_variables
-  final text; // Can be string or list
+  const FailedDialog({super.key, this.text, this.type});
+  final dynamic text;
   final String? type;
 
   @override

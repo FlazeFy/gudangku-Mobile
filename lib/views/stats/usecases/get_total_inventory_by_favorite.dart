@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gudangku/modules/api/inventory/stats/models/queries.dart';
-import 'package:gudangku/modules/api/inventory/stats/services/queries.dart';
+import 'package:gudangku/modules/api/stats/models/queries.dart';
+import 'package:gudangku/modules/api/stats/services/queries.dart';
 import 'package:gudangku/modules/component/charts/pie_chart.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class TotalInventoryByFavorite extends StatefulWidget {
+  const TotalInventoryByFavorite({super.key});
+
   @override
   State<TotalInventoryByFavorite> createState() =>
       _TotalInventoryByFavoriteState();
@@ -26,7 +28,7 @@ class _TotalInventoryByFavoriteState extends State<TotalInventoryByFavorite> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService?.getTotalInventoryByFavorite(),
+        future: apiService?.getTotalInventoryByFavorite(statsType),
         builder: (BuildContext context,
             AsyncSnapshot<List<QueriesPieChartModel>> snapshot) {
           if (snapshot.hasError) {

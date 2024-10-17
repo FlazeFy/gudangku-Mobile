@@ -71,5 +71,5 @@ class InventoryAllModel {
 List<InventoryAllModel> inventoryAllModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<InventoryAllModel>.from(
-      data['data'].map((item) => InventoryAllModel.fromJson(item)));
+      data['data']['data'].map((item) => InventoryAllModel.fromJson(item)));
 }

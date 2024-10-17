@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gudangku/modules/component/appbar.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -10,6 +11,8 @@ class CalendarPage extends StatefulWidget {
 class StateCalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SizedBox());
+    return Scaffold(
+        appBar: const ComponentAppBar(title: 'Calendar', isSubMenu: false),
+        body: SizedBox());
   }
 }

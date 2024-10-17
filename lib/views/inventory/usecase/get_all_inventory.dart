@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
+import 'package:gudangku/modules/component/text.dart';
+import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/inventory/usecase/put_recover_inventory.dart';
 import 'package:gudangku/views/inventory/usecase/put_favorite_toogle.dart';
@@ -10,6 +11,8 @@ import 'package:gudangku/views/inventory/usecase/hard_delete_inventory.dart';
 import 'package:gudangku/views/inventory/usecase/soft_delete_inventory.dart';
 
 class GetAllInventory extends StatefulWidget {
+  const GetAllInventory({super.key});
+
   @override
   StateGetAllInventory createState() => StateGetAllInventory();
 }
@@ -32,15 +35,15 @@ class StateGetAllInventory extends State<GetAllInventory> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiInventoryQuery.getAllInventory(),
+        future: apiInventoryQuery.getAllInventory(pageMyInventory),
         builder: (BuildContext context,
             AsyncSnapshot<List<InventoryAllModel>> snapshot) {
           if (snapshot.hasError) {
             // Get.dialog(FailedDialog(
             //     text: "Unknown error, please contact the admin",
             //     type: "error"));
-            return const Center(
-              child: Text("Something wrong"),
+            return Center(
+              child: Text(snapshot.toString()),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<InventoryAllModel> contents = snapshot.data ?? [];
@@ -58,72 +61,269 @@ class StateGetAllInventory extends State<GetAllInventory> {
   Widget _buildListView(List<InventoryAllModel> data) {
     if (data.isNotEmpty) {
       return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: Get.width * 3,
-            child: DataTable(
-              columnSpacing: spaceSM,
-              horizontalMargin: spaceLG,
-              columns: const [
-                DataColumn(label: Text('Inventory Name')),
-                DataColumn(label: Text('Category')),
-                DataColumn(label: Text('Description')),
-                DataColumn(label: Text('Merk')),
-                DataColumn(label: Text('Room')),
-                DataColumn(label: Text('Storage / Rack')),
-                DataColumn(label: Text('Price')),
-                DataColumn(label: Text('Volume')),
-                DataColumn(label: Text('Capacity')),
-                DataColumn(label: Text('Info')),
-                DataColumn(label: Text('Favorite')),
-                DataColumn(label: Text('Edit')),
-                DataColumn(label: Text('Delete'))
-              ],
-              rows: data.map<DataRow>((dt) {
-                return DataRow(
-                  color: dt.deletedAt == ""
-                      ? MaterialStateProperty.all(Colors.transparent)
-                      : MaterialStateProperty.all(dangerBG.withOpacity(0.25)),
-                  cells: [
-                    DataCell(Text(dt.inventoryName)),
-                    DataCell(Text(dt.inventoryCategory)),
-                    DataCell(Text(dt.inventoryDesc ?? "-")),
-                    DataCell(Text(dt.inventoryMerk ?? "-")),
-                    DataCell(Text(dt.inventoryRoom ?? "-")),
-                    DataCell(Text(
-                        "${dt.inventoryStorage ?? "-"} / ${dt.inventoryRack ?? "-"}")),
-                    DataCell(Text("Rp. ${dt.inventoryPrice}")),
-                    DataCell(Text("${dt.inventoryVol} ${dt.inventoryUnit}")),
-                    DataCell(Text(
-                        "${dt.inventoryCapacityVol ?? "-"} ${dt.inventoryCapacityUnit == "percentage" ? "%" : "-"}")),
-                    DataCell(PropsInventory(
-                        createdAt: dt.createdAt,
-                        updatedAt: dt.updatedAt ?? "",
-                        deletedAt: dt.deletedAt ?? "")),
-                    DataCell(FavoriteToogle(
+        scrollDirection: Axis.horizontal,
+        child: SizedBox(
+          width: 1400,
+          child: Table(
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            border: TableBorder.all(
+                borderRadius:
+                    const BorderRadius.all(Radius.circular(roundedMini)),
+                color: primaryColor),
+            columnWidths: const {
+              0: FixedColumnWidth(140),
+              1: FixedColumnWidth(100),
+              2: FixedColumnWidth(160),
+              3: FixedColumnWidth(100),
+              4: FixedColumnWidth(100),
+              5: FixedColumnWidth(140),
+              6: FixedColumnWidth(120),
+              7: FixedColumnWidth(80),
+              8: FixedColumnWidth(100),
+              9: FixedColumnWidth(80),
+              10: FixedColumnWidth(80),
+              11: FixedColumnWidth(80),
+              12: FixedColumnWidth(80),
+            },
+            children: [
+              TableRow(
+                children: [
+                  TableCell(
+                      child: Container(
+                    color: primaryColor,
+                    padding: const EdgeInsets.all(spaceMD),
+                    child: const Text(
+                      'Name',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: whiteColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+                  TableCell(
+                      child: Container(
+                    color: primaryColor,
+                    padding: const EdgeInsets.all(spaceMD),
+                    child: const Text(
+                      'Category',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: whiteColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+                  TableCell(
+                      child: Container(
+                    color: primaryColor,
+                    padding: const EdgeInsets.all(spaceMD),
+                    child: const Text(
+                      'Description',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: whiteColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+                  TableCell(
+                      child: Container(
+                    color: primaryColor,
+                    padding: const EdgeInsets.all(spaceMD),
+                    child: const Text(
+                      'Merk',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: whiteColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Room',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Storage / Rack',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Price',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Volume',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Capacity',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Info',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Favorite',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Edit',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                  TableCell(
+                    child: Container(
+                        color: primaryColor,
+                        padding: const EdgeInsets.all(spaceMD),
+                        child: const Text(
+                          'Delete',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: whiteColor),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                ],
+              ),
+              ...data.map<TableRow>((dt) {
+                return TableRow(
+                  children: [
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text', text: dt.inventoryName))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text',
+                                text: dt.inventoryCategory))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text',
+                                text: dt.inventoryDesc ?? '-'))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text', text: dt.inventoryMerk))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text', text: dt.inventoryRoom))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text',
+                                text:
+                                    "${dt.inventoryStorage ?? "-"} / ${dt.inventoryRack ?? "-"}"))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text',
+                                text: "Rp. ${dt.inventoryPrice}"))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text',
+                                text:
+                                    "${dt.inventoryVol} ${dt.inventoryUnit}"))),
+                    TableCell(
+                        child: Padding(
+                            padding: const EdgeInsets.all(spaceXSM),
+                            child: ComponentText(
+                                type: 'table_text',
+                                text:
+                                    "${dt.inventoryCapacityVol ?? "-"} ${dt.inventoryCapacityUnit == "percentage" ? "%" : "-"}"))),
+                    TableCell(
+                        child: PropsInventory(
+                            createdAt: dt.createdAt,
+                            updatedAt: dt.updatedAt ?? "",
+                            deletedAt: dt.deletedAt ?? "")),
+                    TableCell(
+                        child: FavoriteToogle(
                       id: dt.id,
                       isFavorite: dt.isFavorite,
                     )),
-                    DataCell(dt.deletedAt != ""
-                        ? PostRecover(
-                            id: dt.id,
-                            inventoryName: dt.inventoryName,
-                          )
-                        : const SizedBox()),
-                    DataCell(dt.deletedAt == ""
-                        ? SoftDeleteInventory(
-                            id: dt.id,
-                            inventoryName: dt.inventoryName,
-                          )
-                        : HardDeleteInventory(
-                            id: dt.id,
-                            inventoryName: dt.inventoryName,
-                          )),
+                    TableCell(
+                        child: dt.deletedAt != ""
+                            ? PostRecover(
+                                id: dt.id,
+                                inventoryName: dt.inventoryName,
+                              )
+                            : const SizedBox()),
+                    TableCell(
+                        child: dt.deletedAt == ""
+                            ? SoftDeleteInventory(
+                                id: dt.id,
+                                inventoryName: dt.inventoryName,
+                              )
+                            : HardDeleteInventory(
+                                id: dt.id,
+                                inventoryName: dt.inventoryName,
+                              )),
                   ],
                 );
               }).toList(),
-            ),
-          ));
+            ],
+          ),
+        ),
+      );
     } else {
       return const Text("Unknown error, please contact the admin");
     }

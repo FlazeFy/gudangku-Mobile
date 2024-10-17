@@ -6,7 +6,7 @@ Widget getInputTextMain(ctrl, String title, int len, bool secure) {
     padding: EdgeInsets.zero,
     child: TextFormField(
       obscureText: secure,
-      cursorColor: Colors.white,
+      cursorColor: whiteColor,
       controller: ctrl,
       maxLength: len,
       style: const TextStyle(

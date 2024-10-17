@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class SuccessDialog extends StatelessWidget {
-  SuccessDialog({this.text});
+  const SuccessDialog({super.key, this.text});
   final String? text;
 
   @override

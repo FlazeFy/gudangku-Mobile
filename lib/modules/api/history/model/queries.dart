@@ -29,5 +29,5 @@ class HistoryAllModel {
 List<HistoryAllModel> historyAllModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<HistoryAllModel>.from(
-      data['data'].map((item) => HistoryAllModel.fromJson(item)));
+      data['data']['data'].map((item) => HistoryAllModel.fromJson(item)));
 }

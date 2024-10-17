@@ -29,14 +29,6 @@ const double spaceXSM = 8;
 const double spaceXXSM = 6;
 const double spaceMini = 4;
 
-// Table column min width
-const double tcolMinXSM = 60;
-const double tcolMinSM = 120;
-const double tcolMinMD = 140;
-const double tcolMinLG = 180;
-const double tcolMinJumbo = 240;
-const double tcolMinHuge = 360;
-
 // Color Palette
 const Color successBG = Color(0xFF00C363);
 const Color dangerBG = Color(0xFFDD0022);

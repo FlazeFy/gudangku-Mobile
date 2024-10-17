@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/service/commands.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
+import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class SoftDeleteInventory extends StatefulWidget {
@@ -98,7 +99,7 @@ class StateSoftDeleteInventory extends State<SoftDeleteInventory> {
                                     var body = response[0]['body'];
 
                                     if (status == "success") {
-                                      Get.back();
+                                      Get.to(const BottomBar());
                                     } else {
                                       Get.dialog(FailedDialog(
                                           text: body, type: "deleteinventory"));
@@ -116,7 +117,6 @@ class StateSoftDeleteInventory extends State<SoftDeleteInventory> {
             ));
           },
           icon: const Icon(Icons.delete),
-          padding: const EdgeInsets.only(bottom: spaceLG),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.transparent),
             foregroundColor: MaterialStateProperty.all(whiteColor),

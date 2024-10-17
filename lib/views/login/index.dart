@@ -28,12 +28,11 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 10),
                 Text("Manage your home inventory", textAlign: TextAlign.center),
               ])),
-          PostLogin(),
+          const PostLogin(),
           const Text("New user? please register first to use this app",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white)),
+              textAlign: TextAlign.center, style: TextStyle(color: whiteColor)),
           Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: spaceSM),
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                   style: ButtonStyle(

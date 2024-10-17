@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/commands.dart';
 import 'package:gudangku/modules/api/inventory/service/commands.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
+import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class FavoriteToogle extends StatefulWidget {
@@ -44,14 +45,13 @@ class StateFavoriteToogle extends State<FavoriteToogle> {
               var body = response[0]['body'];
 
               if (status == "success") {
-                Get.back();
+                Get.to(const BottomBar());
               } else {
                 Get.dialog(FailedDialog(text: body, type: "toogleFavorite"));
               }
             });
           },
           icon: const FaIcon(FontAwesomeIcons.heart, color: whiteColor),
-          padding: const EdgeInsets.only(bottom: spaceLG),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
                 widget.isFavorite ? dangerBG : Colors.transparent),

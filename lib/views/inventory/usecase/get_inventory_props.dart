@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/service/commands.dart';
+import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class PropsInventory extends StatefulWidget {
@@ -75,26 +76,26 @@ class StatePropsInventory extends State<PropsInventory> {
                         padding: const EdgeInsets.only(
                             left: spaceMD, right: spaceMD, bottom: spaceXMD),
                         child: Column(children: [
-                          const Text(
-                            'Created At',
-                          ),
-                          Text(
-                            widget.createdAt ?? "-",
-                          ),
+                          const ComponentText(
+                              type: 'content_sub_title', text: 'Created At'),
+                          ComponentText(
+                              type: 'content_body', text: widget.createdAt),
                           const SizedBox(height: spaceMD),
-                          const Text(
-                            'Updated At',
-                          ),
-                          Text(
-                            widget.updatedAt != "" ? widget.updatedAt : "-",
-                          ),
+                          const ComponentText(
+                              type: 'content_sub_title', text: 'Updated At'),
+                          ComponentText(
+                              type: 'content_body',
+                              text: widget.updatedAt != ""
+                                  ? widget.updatedAt
+                                  : "-"),
                           const SizedBox(height: spaceMD),
-                          const Text(
-                            'Deleted At',
-                          ),
-                          Text(
-                            widget.deletedAt != "" ? widget.deletedAt : "-",
-                          ),
+                          const ComponentText(
+                              type: 'content_sub_title', text: 'Deleted At'),
+                          ComponentText(
+                              type: 'content_body',
+                              text: widget.deletedAt != ""
+                                  ? widget.deletedAt
+                                  : "-"),
                         ]),
                       )
                     ]),
@@ -102,7 +103,6 @@ class StatePropsInventory extends State<PropsInventory> {
             ));
           },
           icon: const FaIcon(FontAwesomeIcons.info),
-          padding: const EdgeInsets.only(bottom: spaceLG),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.transparent),
             foregroundColor: MaterialStateProperty.all(whiteColor),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gudangku/modules/api/inventory/stats/models/queries.dart';
-import 'package:gudangku/modules/api/inventory/stats/services/queries.dart';
+import 'package:gudangku/modules/api/stats/models/queries.dart';
+import 'package:gudangku/modules/api/stats/services/queries.dart';
 import 'package:gudangku/modules/component/charts/pie_chart.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class TotalInventoryByRoom extends StatefulWidget {
+  const TotalInventoryByRoom({super.key});
+
   @override
   State<TotalInventoryByRoom> createState() => _TotalInventoryByRoomState();
 }
@@ -25,7 +27,7 @@ class _TotalInventoryByRoomState extends State<TotalInventoryByRoom> {
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService?.getTotalInventoryByRoom(),
+        future: apiService?.getTotalInventoryByRoom(statsType),
         builder: (BuildContext context,
             AsyncSnapshot<List<QueriesPieChartModel>> snapshot) {
           if (snapshot.hasError) {

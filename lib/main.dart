@@ -17,7 +17,6 @@ Future<void> fireFCMHandler(RemoteMessage message) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-  print('Handling a background message ${message.messageId}');
 }
 
 Future<void> main() async {
@@ -47,21 +46,21 @@ Future<void> main() async {
 
   final prefs = await SharedPreferences.getInstance();
   if (prefs.containsKey("token_key")) {
-    runApp(MyApp(signed: true));
+    runApp(const MyApp(signed: true));
   } else {
-    runApp(MyApp(signed: false));
+    runApp(const MyApp(signed: false));
   }
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({required this.signed});
-  bool signed;
+  const MyApp({super.key, required this.signed});
+  final bool signed;
 
   @override
-  _MyApp createState() => _MyApp();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyApp extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
@@ -118,7 +117,6 @@ class _MyApp extends State<MyApp> {
 
   getToken() async {
     token = await FirebaseMessaging.instance.getToken();
-    print(token);
   }
 
   @override
@@ -129,8 +127,8 @@ class _MyApp extends State<MyApp> {
       theme: ThemeData(
           scaffoldBackgroundColor: darkColor,
           textTheme: const TextTheme(
-            bodyText1: TextStyle(color: whiteColor),
-            bodyText2: TextStyle(color: whiteColor),
+            bodyLarge: TextStyle(color: whiteColor),
+            bodyMedium: TextStyle(color: whiteColor),
           ),
           dataTableTheme: const DataTableThemeData(
               dataTextStyle: TextStyle(color: whiteColor),

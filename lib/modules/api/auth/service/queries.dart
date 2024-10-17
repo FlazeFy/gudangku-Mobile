@@ -1,12 +1,14 @@
 import 'package:gudangku/modules/api/auth/model/queries.dart';
 import 'package:http/http.dart' show Client;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QueriesAuthServices {
   final String emuUrl = "http://10.0.2.2:8000";
   Client client = Client();
 
   Future<ProfileModel?> getMyProfile() async {
-    const token = '33|0DWfzepjZqA1Utxi3X9KQ40vcmKmZdJIatAJtmnq8d0f169f';
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
     final header = {
       'Accept': 'application/json',
       'Authorization': "Bearer $token",

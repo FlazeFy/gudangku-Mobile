@@ -2,6 +2,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 int selectedIndex = 0;
 
+int pageMyInventory = 1;
+int pageAllHistory = 1;
+
 class PieData {
   PieData(this.xData, this.yData, [this.text = ""]);
   final String xData;
@@ -18,3 +21,5 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   description: 'This channel is used for important notifications.',
   importance: Importance.high,
 );
+
+String statsType = 'item';

@@ -30,8 +30,8 @@ class _PostLoginState extends State<PostLogin> {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
-      padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(spaceLG),
+      margin: const EdgeInsets.all(spaceSM + spaceLG),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,10 +40,10 @@ class _PostLoginState extends State<PostLogin> {
           getInputLabel("Password"),
           getInputTextMain(passCtrl, "Password", 35, true),
           Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: spaceSM),
               alignment: Alignment.bottomRight,
               child: ElevatedButton.icon(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.login,
                     color: whiteColor,
                   ),
@@ -87,7 +87,7 @@ class _PostLoginState extends State<PostLogin> {
                     } else {
                       showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) => FailedDialog(
+                          builder: (BuildContext context) => const FailedDialog(
                               text: "Login failed, field can't be empty"));
                     }
                   },
