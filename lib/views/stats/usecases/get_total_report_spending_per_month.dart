@@ -5,16 +5,16 @@ import 'package:gudangku/modules/component/charts/line_chart.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 
-class TotalReportCreatedPerMonth extends StatefulWidget {
-  const TotalReportCreatedPerMonth({super.key});
+class TotalReportSpendingPerMonth extends StatefulWidget {
+  const TotalReportSpendingPerMonth({super.key});
 
   @override
-  State<TotalReportCreatedPerMonth> createState() =>
-      _TotalReportCreatedPerMonthState();
+  State<TotalReportSpendingPerMonth> createState() =>
+      _TotalReportSpendingPerMonthState();
 }
 
-class _TotalReportCreatedPerMonthState
-    extends State<TotalReportCreatedPerMonth> {
+class _TotalReportSpendingPerMonthState
+    extends State<TotalReportSpendingPerMonth> {
   List<TwoLineData> chartData = [];
   QueriesStatsService? apiService;
 
@@ -29,23 +29,24 @@ class _TotalReportCreatedPerMonthState
     return SafeArea(
       maintainBottomViewPadding: false,
       child: FutureBuilder(
-        future: apiService?.getTotalReportCreatedPerMonth('2024'),
+        future: apiService?.getTotalReportSpendingPerMonth('2024'),
         builder: (BuildContext context,
-            AsyncSnapshot<List<StatsTotalReportCreatedModel>> snapshot) {
+            AsyncSnapshot<List<StatsTotalReportSpendingModel>> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<StatsTotalReportCreatedModel> contents = snapshot.data ?? [];
+            List<StatsTotalReportSpendingModel> contents = snapshot.data ?? [];
             chartData.clear();
 
             for (var content in contents) {
               String label = content.ctx;
-              int totalReport = content.totalReport;
-              int totalItem = content.totalItem;
-              TwoLineData lineData = TwoLineData(label, totalReport, totalItem);
+              dynamic averagePrice = content.avgPrice;
+              dynamic totalPrice = content.totalPrice;
+              TwoLineData lineData =
+                  TwoLineData(label, totalPrice, averagePrice);
               chartData.add(lineData);
             }
 
@@ -61,7 +62,7 @@ class _TotalReportCreatedPerMonthState
   Widget _buildListView(List<TwoLineData> contents) {
     return Container(
         padding: const EdgeInsets.all(spaceJumbo),
-        child: getSplineChart(chartData, 'Total Report Created Per Month', null,
-            'Total Report', 'Total Item'));
+        child: getSplineChart(chartData, 'Total Report Spending Per Month',
+            'Rp. ', 'Total Price', 'Average Price'));
   }
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-Widget getSplineChart(
-    List<TwoLineData> chartData, String? title, String? extra) {
+Widget getSplineChart(List<TwoLineData> chartData, String? title, String? extra,
+    String lineOne, String lineTwo) {
   return SfCartesianChart(
     title: title != null
         ? ChartTitle(
@@ -13,15 +12,25 @@ Widget getSplineChart(
             textStyle: const TextStyle(color: whiteColor, fontSize: 18),
           )
         : const ChartTitle(),
-    legend: const Legend(isVisible: true),
+    legend: const Legend(
+        isVisible: true,
+        textStyle: TextStyle(
+          color: whiteColor,
+        )),
     primaryXAxis: const CategoryAxis(
       title: AxisTitle(
         text: '',
+      ),
+      labelStyle: TextStyle(
+        color: whiteColor,
       ),
     ),
     primaryYAxis: const NumericAxis(
       title: AxisTitle(
         text: '',
+      ),
+      labelStyle: TextStyle(
+        color: whiteColor,
       ),
     ),
     axes: const <ChartAxis>[
@@ -38,9 +47,10 @@ Widget getSplineChart(
         dataSource: chartData,
         xValueMapper: (TwoLineData data, _) => data.xData,
         yValueMapper: (TwoLineData data, _) => data.yData,
-        name: 'Spline Data',
-        dataLabelMapper: (TwoLineData data, _) =>
-            '${double.parse(data.yData.toStringAsFixed(2))}$extra',
+        name: lineOne,
+        dataLabelMapper: (TwoLineData data, _) => data.yData != 0
+            ? '${extra ?? ''}${double.parse(data.yData.toStringAsFixed(2))}'
+            : null,
         dataLabelSettings: const DataLabelSettings(
           isVisible: true,
           textStyle: TextStyle(
@@ -54,14 +64,18 @@ Widget getSplineChart(
           shape: DataMarkerType.circle,
         ),
       ),
-      ColumnSeries<TwoLineData, String>(
+      BarSeries<TwoLineData, String>(
         dataSource: chartData,
         xValueMapper: (TwoLineData data, _) => data.xData,
         yValueMapper: (TwoLineData data, _) => data.zData,
-        name: 'Bar Data',
-        yAxisName: 'secondaryYAxis',
-        dataLabelMapper: (TwoLineData data, _) =>
-            '${double.parse(data.zData.toStringAsFixed(2))}$extra',
+        name: lineTwo,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(roundedSM),
+          topRight: Radius.circular(roundedSM),
+        ),
+        dataLabelMapper: (TwoLineData data, _) => data.zData != 0
+            ? '${extra ?? ''}${double.parse(data.zData.toStringAsFixed(2))}'
+            : null,
         dataLabelSettings: const DataLabelSettings(
           isVisible: true,
           textStyle: TextStyle(

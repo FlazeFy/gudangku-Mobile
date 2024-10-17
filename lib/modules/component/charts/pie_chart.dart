@@ -11,7 +11,7 @@ Widget getPieChart(List<PieData> chartData, String title) {
           isVisible: true,
           padding: spaceLG,
           backgroundColor: darkColor,
-          position: LegendPosition.bottom,
+          position: LegendPosition.right,
           isResponsive: true,
           orientation: LegendItemOrientation.vertical,
           overflowMode: LegendItemOverflowMode.wrap,
@@ -25,7 +25,8 @@ Widget getPieChart(List<PieData> chartData, String title) {
             dataSource: chartData,
             xValueMapper: (PieData data, _) => data.xData,
             yValueMapper: (PieData data, _) => data.yData,
-            dataLabelMapper: (PieData data, _) => data.text,
-            dataLabelSettings: const DataLabelSettings(isVisible: true)),
+            dataLabelMapper: (PieData data, _) => '${data.yData}',
+            dataLabelSettings: const DataLabelSettings(
+                isVisible: true, textStyle: TextStyle(fontSize: textXMD))),
       ]);
 }

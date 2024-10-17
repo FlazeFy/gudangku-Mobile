@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
@@ -121,6 +122,12 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    //Lock device on portrait
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'GudangKu',

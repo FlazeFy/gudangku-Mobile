@@ -43,3 +43,27 @@ List<StatsTotalReportCreatedModel> statsTotalReportCreatedModelFromJson(
   return List<StatsTotalReportCreatedModel>.from(
       data['data'].map((item) => StatsTotalReportCreatedModel.fromJson(item)));
 }
+
+class StatsTotalReportSpendingModel {
+  String ctx;
+  dynamic totalPrice;
+  dynamic avgPrice;
+
+  StatsTotalReportSpendingModel(
+      {required this.ctx, required this.totalPrice, required this.avgPrice});
+
+  factory StatsTotalReportSpendingModel.fromJson(Map<dynamic, dynamic> map) {
+    return StatsTotalReportSpendingModel(
+      ctx: map["context"],
+      totalPrice: map["total_price"],
+      avgPrice: map["average_price_per_item"],
+    );
+  }
+}
+
+List<StatsTotalReportSpendingModel> statsTotalReportSpendingModelFromJson(
+    String jsonData) {
+  final data = json.decode(jsonData);
+  return List<StatsTotalReportSpendingModel>.from(
+      data['data'].map((item) => StatsTotalReportSpendingModel.fromJson(item)));
+}
