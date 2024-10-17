@@ -12,6 +12,14 @@ class PieData {
   final String text;
 }
 
+class TwoLineData {
+  TwoLineData(this.xData, this.yData, this.zData, [this.text = ""]);
+  final String xData;
+  final num yData;
+  final num zData;
+  final String text;
+}
+
 // Firebase
 String? token;
 

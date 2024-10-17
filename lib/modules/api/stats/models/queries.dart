@@ -19,3 +19,27 @@ List<QueriesPieChartModel> queriesPieChartModelFromJson(String jsonData) {
   return List<QueriesPieChartModel>.from(
       data['data'].map((item) => QueriesPieChartModel.fromJson(item)));
 }
+
+class StatsTotalReportCreatedModel {
+  String ctx;
+  int totalReport;
+  int totalItem;
+
+  StatsTotalReportCreatedModel(
+      {required this.ctx, required this.totalReport, required this.totalItem});
+
+  factory StatsTotalReportCreatedModel.fromJson(Map<dynamic, dynamic> map) {
+    return StatsTotalReportCreatedModel(
+      ctx: map["context"],
+      totalReport: map["total_report"],
+      totalItem: map["total_item"],
+    );
+  }
+}
+
+List<StatsTotalReportCreatedModel> statsTotalReportCreatedModelFromJson(
+    String jsonData) {
+  final data = json.decode(jsonData);
+  return List<StatsTotalReportCreatedModel>.from(
+      data['data'].map((item) => StatsTotalReportCreatedModel.fromJson(item)));
+}
