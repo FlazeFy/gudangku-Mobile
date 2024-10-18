@@ -37,6 +37,15 @@ class ComponentText extends StatelessWidget {
                   fontSize: textSM,
                   fontWeight: FontWeight.normal,
                   color: whiteColor)));
+    } else if (type == 'no_data') {
+      return Container(
+          margin: const EdgeInsets.only(bottom: spaceMini),
+          child: Text("- $text -",
+              style: const TextStyle(
+                  fontSize: textSM,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.normal,
+                  color: greyColor)));
     } else {
       return const Text("Default Title");
     }
