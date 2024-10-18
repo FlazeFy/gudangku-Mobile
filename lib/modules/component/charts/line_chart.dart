@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gudangku/modules/global/global.dart';
+import 'package:gudangku/modules/api/stats/models/queries.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

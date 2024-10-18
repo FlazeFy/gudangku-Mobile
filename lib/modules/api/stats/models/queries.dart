@@ -1,5 +1,20 @@
 import 'dart:convert';
 
+class PieData {
+  PieData(this.xData, this.yData, [this.text = ""]);
+  final String xData;
+  final num yData;
+  final String text;
+}
+
+class TwoLineData {
+  TwoLineData(this.xData, this.yData, this.zData, [this.text = ""]);
+  final String xData;
+  final num yData;
+  final num zData;
+  final String text;
+}
+
 class QueriesPieChartModel {
   String ctx;
   int total;

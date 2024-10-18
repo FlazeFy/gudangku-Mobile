@@ -19,7 +19,7 @@ class ComponentText extends StatelessWidget {
               color: whiteColor));
     } else if (type == 'content_title') {
       return Container(
-          margin: const EdgeInsets.only(bottom: spaceMini),
+          margin: const EdgeInsets.only(bottom: spaceSM),
           child: Text(text,
               style: const TextStyle(
                   fontSize: textLG, fontWeight: FontWeight.w600)));

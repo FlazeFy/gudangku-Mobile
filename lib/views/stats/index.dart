@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/component/navbar.dart';
+import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_category.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_favorite.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_room.dart';
 import 'package:gudangku/views/stats/usecases/get_total_report_created_per_month.dart';
 import 'package:gudangku/views/stats/usecases/get_total_report_spending_per_month.dart';
+import 'package:gudangku/views/stats/usecases/toggle_total.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({Key? key}) : super(key: key);
@@ -17,7 +19,8 @@ class StatsPage extends StatefulWidget {
   StateStatsPageState createState() => StateStatsPageState();
 }
 
-class StateStatsPageState extends State<StatsPage> {
+class StateStatsPageState extends State<StatsPage>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -25,6 +28,14 @@ class StateStatsPageState extends State<StatsPage> {
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+
+    globalStatsTabController = TabController(
+        length: 2, vsync: this, initialIndex: selectedStatsTabIndex);
+    globalStatsTabController?.addListener(() {
+      if (!globalStatsTabController!.indexIsChanging) {
+        selectedStatsTabIndex = globalStatsTabController!.index;
+      }
+    });
   }
 
   @override
@@ -35,6 +46,7 @@ class StateStatsPageState extends State<StatsPage> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    globalStatsTabController?.dispose();
     super.dispose();
   }
 
@@ -50,12 +62,12 @@ class StateStatsPageState extends State<StatsPage> {
           return true;
         },
         child: DefaultTabController(
-            initialIndex: 1,
             length: 2,
             child: Scaffold(
               appBar: TabBar(
                 labelColor: primaryColor,
                 indicatorColor: primaryColor,
+                controller: globalStatsTabController,
                 padding: EdgeInsets.only(top: Get.height * 0.05),
                 tabs: const <Widget>[
                   Tab(
@@ -74,6 +86,7 @@ class StateStatsPageState extends State<StatsPage> {
                 ],
               ),
               body: TabBarView(
+                controller: globalStatsTabController,
                 children: <Widget>[
                   Center(
                     child: ListView(
@@ -107,6 +120,8 @@ class StateStatsPageState extends State<StatsPage> {
                         color: whiteColor,
                       ),
                     ),
+                    const SizedBox(height: spaceMD),
+                    const ToggleTotal(),
                     const SizedBox(height: spaceMD),
                     FloatingActionButton(
                       heroTag: 'back',

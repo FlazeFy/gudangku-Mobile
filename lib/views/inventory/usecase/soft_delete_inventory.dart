@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/service/commands.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
 import 'package:gudangku/modules/component/navbar.dart';
+import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class SoftDeleteInventory extends StatefulWidget {
@@ -42,16 +43,14 @@ class StateSoftDeleteInventory extends State<SoftDeleteInventory> {
                 height: 200,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         padding: const EdgeInsets.only(
                             left: spaceMD, right: spaceMD, top: spaceMD),
                         child: Row(children: [
-                          const Text("Delete",
-                              style: TextStyle(
-                                  fontSize: textLG,
-                                  fontWeight: FontWeight.w600)),
+                          const ComponentText(
+                              type: 'content_title', text: 'Delete'),
                           const Spacer(),
                           IconButton(
                             icon: const Icon(Icons.close),

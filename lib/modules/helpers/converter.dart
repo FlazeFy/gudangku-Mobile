@@ -26,6 +26,21 @@ String getMessageResponseFromObject(val, type) {
   }
 }
 
+String ucFirst(String val) {
+  String res = "";
+  if (val.trim() != "") {
+    res = val[0].toUpperCase() + val.substring(1);
+  }
+  return res;
+}
+
+String ucAll(String val) {
+  List<String> words = val.split(' ');
+  words =
+      words.map((word) => word[0].toUpperCase() + word.substring(1)).toList();
+  return words.join(' ');
+}
+
 String getLocalConvertedDate(String date) {
   DateTime now = DateTime.now();
   Duration timeZoneOffset = now.timeZoneOffset;

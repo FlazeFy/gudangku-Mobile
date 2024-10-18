@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gudangku/modules/api/stats/models/queries.dart';
 import 'package:gudangku/modules/api/stats/services/queries.dart';
 import 'package:gudangku/modules/component/charts/line_chart.dart';
-import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class TotalReportCreatedPerMonth extends StatefulWidget {
