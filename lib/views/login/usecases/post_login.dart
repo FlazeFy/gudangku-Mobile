@@ -36,9 +36,18 @@ class _PostLoginState extends State<PostLogin> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getInputLabel("Email Address or Username"),
-          getInputTextMain(usernameCtrl, "example.com / personabc", 35, false),
+          ComponentInput(
+              ctrl: usernameCtrl,
+              hinttext: "example.com / personabc",
+              maxLength: 35,
+              type: 'email'),
           getInputLabel("Password"),
-          getInputTextMain(passCtrl, "Password", 35, true),
+          ComponentInput(
+              ctrl: passCtrl,
+              hinttext: "password",
+              maxLength: 35,
+              secure: true,
+              type: 'text'),
           Container(
               margin: const EdgeInsets.only(top: spaceSM),
               alignment: Alignment.bottomRight,

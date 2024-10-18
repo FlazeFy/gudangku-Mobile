@@ -4,8 +4,10 @@ import 'package:gudangku/modules/global/style.dart';
 class ComponentButton extends StatelessWidget {
   final String type;
   final String text;
+  final dynamic icon;
 
-  const ComponentButton({super.key, required this.type, required this.text});
+  const ComponentButton(
+      {super.key, required this.type, required this.text, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,35 @@ class ComponentButton extends StatelessWidget {
                 fontSize: textXMD,
                 fontWeight: FontWeight.w500)),
       );
+    } else if (type == 'button_primary') {
+      return Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: spaceXMD, vertical: spaceSM),
+          decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(width: 2, color: primaryColor),
+              borderRadius: const BorderRadius.all(Radius.circular(roundedLG))),
+          child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  if (icon != null)
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: spaceMini),
+                        child: icon,
+                      ),
+                    ),
+                  TextSpan(
+                    text: text,
+                    style: const TextStyle(
+                      color: whiteColor,
+                      fontSize: textLG,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              )));
     } else {
       return const Text("Default Title");
     }

@@ -76,12 +76,23 @@ class _GetMyProfileState extends State<GetMyProfile> {
                       fontStyle: FontStyle.italic, fontSize: textMD)),
               const SizedBox(height: spaceMD),
               getInputLabel("Username"),
-              getInputTextMain(usernameCtrl, "Username", 36, false),
+              ComponentInput(
+                  ctrl: usernameCtrl,
+                  hinttext: "Username",
+                  maxLength: 36,
+                  type: 'text'),
               getInputLabel("Email"),
-              getInputTextMain(emailCtrl, "Email", 144, false),
+              ComponentInput(
+                  ctrl: emailCtrl,
+                  hinttext: "Email",
+                  maxLength: 144,
+                  type: 'text'),
               getInputLabel("Telegram User ID"),
-              getInputTextMain(
-                  telegramUserIdCtrl, "Telegram User ID", 36, false),
+              ComponentInput(
+                  ctrl: telegramUserIdCtrl,
+                  hinttext: "Telegram User ID",
+                  maxLength: 36,
+                  type: 'text'),
               Container(
                   margin: const EdgeInsets.only(top: spaceMD),
                   alignment: Alignment.bottomRight,
