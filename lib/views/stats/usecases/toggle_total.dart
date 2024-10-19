@@ -7,6 +7,7 @@ import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/modules/helpers/converter.dart';
 import 'package:gudangku/views/stats/index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ToggleTotal extends StatefulWidget {
   const ToggleTotal({Key? key}) : super(key: key);
@@ -101,8 +102,27 @@ class StateToggleTotalState extends State<ToggleTotal> {
                                 }
                                 return null;
                               },
-                              onChanged: (value) {
+                              onChanged: (value) async {
+                                final prefs =
+                                    await SharedPreferences.getInstance();
                                 statsType = value.toString();
+                                const keys = [
+                                  'total-inventory-by-cat-item-sess',
+                                  'total-inventory-by-cat-price-sess',
+                                  'last-hit-total-inventory-by-cat-item-sess',
+                                  'last-hit-total-inventory-by-cat-price-sess',
+                                  'total-inventory-by-fav-item-sess',
+                                  'total-inventory-by-fav-price-sess',
+                                  'last-hit-total-inventory-by-fav-item-sess',
+                                  'last-hit-total-inventory-by-fav-price-sess',
+                                  'total-inventory-by-room-item-sess',
+                                  'total-inventory-by-room-price-sess',
+                                  'last-hit-total-inventory-by-room-item-sess',
+                                  'last-hit-total-inventory-by-room-price-sess',
+                                ];
+                                keys.forEach((el) {
+                                  prefs.remove(el);
+                                });
                                 globalStatsTabController!.index = 0;
                                 Get.to(const StatsPage());
                               },

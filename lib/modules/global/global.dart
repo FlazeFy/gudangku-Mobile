@@ -30,3 +30,5 @@ bool isOffline = false;
 // API Fetch rest time
 int dctFetchRestTime = 300; // in second
 int historyFetchRestTime = 60; // in second
+int profileFetchRestTime = 60; // in second
+int statsFetchRestTime = 120; // in second
