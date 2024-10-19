@@ -15,49 +15,40 @@ class GetAllHistory extends StatefulWidget {
 
 class StateGetAllHistory extends State<GetAllHistory> {
   late HistoryQueriesService apiHistoryQuery;
-  int i = 0;
   List<HistoryAllModel> dt = [];
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
     apiHistoryQuery = HistoryQueriesService();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    setState(() {
+      isLoading = true;
+    });
+    var data = await apiHistoryQuery.getAllHistory(pageAllHistory);
+    setState(() {
+      dt = data;
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiHistoryQuery.getAllHistory(pageAllHistory),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<HistoryAllModel>> snapshot) {
-          if (snapshot.hasError) {
-            // Get.dialog(FailedDialog(
-            //     text: "Unknown error, please contact the admin",
-            //     type: "error"));
-            return const Center(
-              child: Text("Something wrong"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<HistoryAllModel> contents = snapshot.data ?? [];
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(color: primaryColor),
-            );
-          }
-        },
-      ),
+      child: isLoading
+          ? const Center(child: CircularProgressIndicator(color: primaryColor))
+          : _buildListView(dt),
     );
   }
 
   Widget _buildListView(List<HistoryAllModel> data) {
     if (data.isNotEmpty) {
       return Column(
-        children: data.map<Widget>((e) {
+        children: data.map((e) {
           return Container(
             padding: const EdgeInsets.all(spaceMD),
             decoration: BoxDecoration(
@@ -68,13 +59,15 @@ class StateGetAllHistory extends State<GetAllHistory> {
             child: Row(
               children: [
                 SizedBox(
-                    width: Get.width * 0.75,
-                    child: Text(
-                      "${e.historyType} ${e.historyContext}",
-                    )),
+                  width: Get.width * 0.75,
+                  child: Text("${e.historyType} ${e.historyContext}"),
+                ),
                 const Spacer(),
                 HardDeleteHistory(
-                    id: e.id, ctx: "${e.historyType} ${e.historyContext}")
+                  id: e.id,
+                  ctx: "${e.historyType} ${e.historyContext}",
+                  onReload: loadData,
+                ),
               ],
             ),
           );

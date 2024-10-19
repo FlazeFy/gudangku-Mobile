@@ -8,7 +8,7 @@ class ComponentInput extends StatelessWidget {
   final bool? secure;
   final int? maxLength;
   final int? minLength;
-  final dynamic? action;
+  final dynamic action;
   final int? maxLines;
 
   const ComponentInput(

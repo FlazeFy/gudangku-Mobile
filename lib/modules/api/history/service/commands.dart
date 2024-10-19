@@ -26,16 +26,16 @@ class HistoryCommandsService {
 
     var responseData = jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
+    if ([200, 404, 401, 500].contains(response.statusCode)) {
       return [
         {
-          "message": "success",
-          "body": responseData["message"],
+          "status": responseData["status"],
+          "message": responseData["message"],
         }
       ];
     } else {
       return [
-        {"message": "failed", "body": responseData['message']}
+        {"status": "failed", "message": "something wrong. please contact admin"}
       ];
     }
   }

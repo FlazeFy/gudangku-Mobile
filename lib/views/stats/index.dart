@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
 import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/global.dart';

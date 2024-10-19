@@ -3,13 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/api/History/service/commands.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
+import 'package:gudangku/modules/component/dialog/success_dialog.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HardDeleteHistory extends StatefulWidget {
   final String id;
   final String ctx;
+  final VoidCallback onReload;
 
-  const HardDeleteHistory({Key? key, required this.id, required this.ctx})
+  const HardDeleteHistory(
+      {Key? key, required this.id, required this.ctx, required this.onReload})
       : super(key: key);
 
   @override
@@ -88,16 +92,21 @@ class StateHardDeleteHistory extends State<HardDeleteHistory> {
                             onPressed: () {
                               apiHistoryCommand
                                   .hardDeleteHistoryById(widget.id)
-                                  .then((response) {
+                                  .then((response) async {
                                 setState(() => {});
-                                var status = response[0]['message'];
-                                var body = response[0]['body'];
+                                var status = response[0]['status'];
+                                var msg = response[0]['message'];
 
                                 if (status == "success") {
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.remove("last-hit-history-sess");
+                                  widget.onReload();
                                   Get.back();
+                                  Get.dialog(SuccessDialog(text: msg));
                                 } else {
                                   Get.dialog(FailedDialog(
-                                      text: body, type: "deleteHistory"));
+                                      text: msg, type: "deleteHistory"));
                                 }
                               });
                             },

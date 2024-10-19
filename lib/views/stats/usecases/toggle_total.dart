@@ -120,9 +120,9 @@ class StateToggleTotalState extends State<ToggleTotal> {
                                   'last-hit-total-inventory-by-room-item-sess',
                                   'last-hit-total-inventory-by-room-price-sess',
                                 ];
-                                keys.forEach((el) {
+                                for (var el in keys) {
                                   prefs.remove(el);
-                                });
+                                }
                                 globalStatsTabController!.index = 0;
                                 Get.to(const StatsPage());
                               },

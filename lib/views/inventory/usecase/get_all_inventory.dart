@@ -26,35 +26,28 @@ class StateGetAllInventory extends State<GetAllInventory> {
   @override
   void initState() {
     super.initState();
-
     apiInventoryQuery = InventoryQueriesService();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    setState(() {
+      isLoading = true;
+    });
+    var data = await apiInventoryQuery.getAllInventory(pageMyInventory);
+    setState(() {
+      dt = data;
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiInventoryQuery.getAllInventory(pageMyInventory),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<InventoryAllModel>> snapshot) {
-          if (snapshot.hasError) {
-            // Get.dialog(FailedDialog(
-            //     text: "Unknown error, please contact the admin",
-            //     type: "error"));
-            return Center(
-              child: Text(snapshot.toString()),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<InventoryAllModel> contents = snapshot.data ?? [];
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(color: primaryColor),
-            );
-          }
-        },
-      ),
+      child: isLoading
+          ? const Center(child: CircularProgressIndicator(color: primaryColor))
+          : _buildListView(dt),
     );
   }
 
@@ -299,12 +292,14 @@ class StateGetAllInventory extends State<GetAllInventory> {
                         child: FavoriteToogle(
                       id: dt.id,
                       isFavorite: dt.isFavorite,
+                      onReload: loadData,
                     )),
                     TableCell(
                         child: dt.deletedAt != ""
                             ? PostRecover(
                                 id: dt.id,
                                 inventoryName: dt.inventoryName,
+                                onReload: loadData,
                               )
                             : const SizedBox()),
                     TableCell(
@@ -312,10 +307,12 @@ class StateGetAllInventory extends State<GetAllInventory> {
                             ? SoftDeleteInventory(
                                 id: dt.id,
                                 inventoryName: dt.inventoryName,
+                                onReload: loadData,
                               )
                             : HardDeleteInventory(
                                 id: dt.id,
                                 inventoryName: dt.inventoryName,
+                                onReload: loadData,
                               )),
                   ],
                 );

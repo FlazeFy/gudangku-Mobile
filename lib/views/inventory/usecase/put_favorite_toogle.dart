@@ -4,14 +4,20 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/commands.dart';
 import 'package:gudangku/modules/api/inventory/service/commands.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
+import 'package:gudangku/modules/component/dialog/success_dialog.dart';
 import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class FavoriteToogle extends StatefulWidget {
   final bool isFavorite;
   final String id;
+  final VoidCallback onReload;
 
-  const FavoriteToogle({Key? key, required this.isFavorite, required this.id})
+  const FavoriteToogle(
+      {Key? key,
+      required this.isFavorite,
+      required this.id,
+      required this.onReload})
       : super(key: key);
 
   @override
@@ -41,13 +47,14 @@ class StateFavoriteToogle extends State<FavoriteToogle> {
                 .toogleFavInventoryById(widget.id, dt)
                 .then((response) {
               setState(() => {});
-              var status = response[0]['message'];
-              var body = response[0]['body'];
+              var status = response[0]['status'];
+              var msg = response[0]['message'];
 
               if (status == "success") {
-                Get.to(const BottomBar());
+                widget.onReload();
+                Get.dialog(SuccessDialog(text: msg));
               } else {
-                Get.dialog(FailedDialog(text: body, type: "toogleFavorite"));
+                Get.dialog(FailedDialog(text: msg, type: "toogleFavorite"));
               }
             });
           },
