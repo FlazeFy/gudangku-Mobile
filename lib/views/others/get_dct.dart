@@ -2,7 +2,6 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:gudangku/modules/api/dictionary/model/queries.dart';
 import 'package:gudangku/modules/api/dictionary/service/queries.dart';
-import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/modules/helpers/converter.dart';
 
@@ -21,59 +20,62 @@ class StateGetAllDctByType extends State<GetAllDctByType> {
   late DictionaryQueriesService apiHistoryQuery;
   int i = 0;
   List<DctModel> dt = [];
-  bool isLoading = false;
+  bool isLoading = true;
+  String? selectedValue;
 
   @override
   void initState() {
     super.initState();
-
     apiHistoryQuery = DictionaryQueriesService();
+    selectedValue = widget.selected;
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    try {
+      dt = await apiHistoryQuery.getDctByType(widget.type);
+      dt.add(DctModel(dctName: '-'));
+      if (!dt.any((element) => element.dctName == selectedValue)) {
+        selectedValue = null;
+      }
+    } catch (e) {
+      // print('Error fetching data: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(color: primaryColor),
+      );
+    }
+
     return SafeArea(
       maintainBottomViewPadding: false,
-      child: FutureBuilder(
-        future: apiHistoryQuery.getDctByType(widget.type),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<DctModel>> snapshot) {
-          if (snapshot.hasError) {
-            // Get.dialog(FailedDialog(
-            //     text: "Unknown error, please contact the admin",
-            //     type: "error"));
-            return const Center(
-              child: Text("Something wrong"),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            List<DctModel> contents = snapshot.data ?? [];
-            return _buildListView(contents);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(color: primaryColor),
-            );
-          }
-        },
-      ),
+      child: _buildListView(dt),
     );
   }
 
   Widget _buildListView(List<DctModel> data) {
     if (data.isNotEmpty) {
-      data.add(DctModel(dctName: '-'));
       return DropdownButtonFormField2<String>(
         isExpanded: true,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(vertical: spaceMD),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
+              borderRadius: BorderRadius.circular(roundedMD),
+              borderSide: const BorderSide(color: primaryColor)),
         ),
         hint: const Text(
           'Select Total Type',
           style: TextStyle(fontSize: textMD, color: whiteColor),
         ),
-        value: widget.selected,
+        value: selectedValue,
         items: data
             .map((item) => DropdownMenuItem<String>(
                   value: item.dctName,
@@ -89,7 +91,12 @@ class StateGetAllDctByType extends State<GetAllDctByType> {
           }
           return null;
         },
-        onChanged: widget.action,
+        onChanged: (value) {
+          setState(() {
+            selectedValue = value;
+          });
+          widget.action(value);
+        },
         iconStyleData: const IconStyleData(
           icon: Icon(
             Icons.arrow_drop_down,

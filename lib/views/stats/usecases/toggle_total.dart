@@ -70,11 +70,13 @@ class StateToggleTotalState extends State<ToggleTotal> {
                             DropdownButtonFormField2<String>(
                               isExpanded: true,
                               decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 16),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: spaceMD),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
+                                    borderRadius:
+                                        BorderRadius.circular(roundedMD),
+                                    borderSide:
+                                        const BorderSide(color: primaryColor)),
                               ),
                               hint: const Text(
                                 'Select Total Type',

@@ -24,3 +24,9 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   description: 'This channel is used for important notifications.',
   importance: Importance.high,
 );
+
+bool isOffline = false;
+
+// API Fetch rest time
+int dctFetchRestTime = 300; // in second
+int historyFetchRestTime = 60; // in second

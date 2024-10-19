@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/component/input/form.dart';
 import 'package:gudangku/modules/component/input/label.dart';
+import 'package:gudangku/modules/component/others.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/views/others/get_dct.dart';
 
@@ -48,6 +49,7 @@ class StatePostInventoryState extends State<PostInventory> {
             hinttext: "0",
             maxLength: 9,
             type: 'number'),
+        getDivider(),
         const ComponentText(type: 'content_title', text: 'Standard Capacity'),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,6 +80,7 @@ class StatePostInventoryState extends State<PostInventory> {
                 ))
           ],
         ),
+        getDivider(),
         const ComponentText(type: 'content_title', text: 'Remaining Capacity'),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,15 +106,17 @@ class StatePostInventoryState extends State<PostInventory> {
                   children: [
                     getInputLabel("Unit"),
                     GetAllDctByType(
-                        type: 'inventory_unit', selected: selectedInventoryUnit)
+                        type: 'inventory_unit',
+                        selected: selectedInventoryUnitRemain)
                   ],
                 ))
           ],
         ),
+        getDivider(),
         const ComponentText(type: 'content_title', text: 'Placement'),
         getInputLabel("Room"),
         GetAllDctByType(
-            type: 'inventory_unit', selected: selectedInventoryUnit),
+            type: 'inventory_room', selected: selectedInventoryRoom),
         getInputLabel("Storage"),
         ComponentInput(
             ctrl: inventoryStorageCtrl,
