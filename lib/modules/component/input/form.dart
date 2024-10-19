@@ -8,6 +8,8 @@ class ComponentInput extends StatelessWidget {
   final bool? secure;
   final int? maxLength;
   final int? minLength;
+  final dynamic? action;
+  final int? maxLines;
 
   const ComponentInput(
       {super.key,
@@ -16,38 +18,57 @@ class ComponentInput extends StatelessWidget {
       required this.hinttext,
       this.secure,
       this.maxLength,
-      this.minLength});
+      this.minLength,
+      this.action,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.zero,
-      child: TextFormField(
-        obscureText: secure ?? false,
-        cursorColor: whiteColor,
-        controller: ctrl,
-        keyboardType:
-            type == 'number' ? TextInputType.number : TextInputType.text,
-        maxLength: maxLength ?? 255,
-        style: const TextStyle(
-            color: whiteColor, fontWeight: FontWeight.w400, fontSize: textXMD),
-        decoration: InputDecoration(
-          hintStyle:
-              const TextStyle(color: whiteColor, fontStyle: FontStyle.italic),
-          helperStyle: const TextStyle(color: whiteColor),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          hintText: hinttext,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(width: 1, color: primaryColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(width: 2.5, color: successBG),
+    if (type != 'checkbox') {
+      return Container(
+        padding: EdgeInsets.zero,
+        child: TextFormField(
+          obscureText: secure ?? false,
+          cursorColor: whiteColor,
+          controller: ctrl,
+          maxLines: maxLines ?? 1,
+          keyboardType:
+              type == 'number' ? TextInputType.number : TextInputType.text,
+          maxLength: maxLength ?? 255,
+          style: const TextStyle(
+              color: whiteColor,
+              fontWeight: FontWeight.w400,
+              fontSize: textXMD),
+          decoration: InputDecoration(
+            hintStyle:
+                const TextStyle(color: whiteColor, fontStyle: FontStyle.italic),
+            helperStyle: const TextStyle(color: whiteColor),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            hintText: hinttext,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(width: 1, color: primaryColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(width: 2.5, color: successBG),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Row(children: [
+        Checkbox(
+            checkColor: successBG,
+            fillColor: MaterialStateProperty.all(Colors.transparent),
+            value: ctrl,
+            side: const BorderSide(color: primaryColor),
+            activeColor: primaryColor,
+            onChanged: action),
+        Text(hinttext,
+            style: const TextStyle(color: whiteColor, fontSize: textMD))
+      ]);
+    }
   }
 }

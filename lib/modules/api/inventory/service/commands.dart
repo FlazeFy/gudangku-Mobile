@@ -134,4 +134,36 @@ class InventoryCommandsService {
       ];
     }
   }
+
+  Future<List<Map<String, dynamic>>> postInventory(InventoryModel data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/inventory"),
+      headers: header,
+      body: inventoryModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+
+    if ([201, 401, 409, 422, 500].contains(response.statusCode)) {
+      return [
+        {
+          "status": responseData["status"],
+          "message": responseData["message"],
+        }
+      ];
+    } else {
+      return [
+        {"status": "failed", "body": "something wrong. please contact admin"}
+      ];
+    }
+  }
 }

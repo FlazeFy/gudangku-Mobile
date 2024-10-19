@@ -53,6 +53,42 @@ class ComponentButton extends StatelessWidget {
                   ),
                 ],
               )));
+    } else if (type == 'button_success' ||
+        type == 'button_danger' ||
+        type == 'button_warning') {
+      return Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: spaceXMD, vertical: spaceSM),
+          decoration: BoxDecoration(
+              color: type == 'button_success'
+                  ? successBG
+                  : type == 'button_danger'
+                      ? dangerBG
+                      : type == 'button_warning'
+                          ? warningBG
+                          : primaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(roundedLG))),
+          child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  if (icon != null)
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: spaceMini),
+                        child: icon,
+                      ),
+                    ),
+                  TextSpan(
+                    text: text,
+                    style: const TextStyle(
+                      color: whiteColor,
+                      fontSize: textLG,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              )));
     } else {
       return const Text("Default Title");
     }
