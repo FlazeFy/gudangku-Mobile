@@ -66,7 +66,8 @@ class StateDetailReportPageState extends State<DetailReportPage> {
           children: [
             GetDetailReport(data: detail),
             const SizedBox(height: spaceMD),
-            GetItemsReport(data: items)
+            GetItemsReport(
+                data: items, reportName: detail.reportTitle, onReload: loadData)
           ],
         ));
   }

@@ -3,10 +3,17 @@ import 'package:gudangku/modules/api/report/model/queries.dart';
 import 'package:gudangku/modules/component/input/form.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/detail_report/usecases/delete_report_item.dart';
 
 class GetItemsReport extends StatefulWidget {
-  const GetItemsReport({super.key, required this.data});
+  const GetItemsReport(
+      {super.key,
+      required this.data,
+      required this.reportName,
+      required this.onReload});
+  final String reportName;
   final List<InventoryReportModel> data;
+  final VoidCallback onReload;
 
   @override
   StateGetItemsReport createState() => StateGetItemsReport();
@@ -33,8 +40,8 @@ class StateGetItemsReport extends State<GetItemsReport> {
             3: FixedColumnWidth(20),
             4: FixedColumnWidth(80),
             5: FixedColumnWidth(80),
-            6: FixedColumnWidth(80),
-            7: FixedColumnWidth(80),
+            6: FixedColumnWidth(30),
+            7: FixedColumnWidth(30),
           },
           children: [
             TableRow(
@@ -175,7 +182,12 @@ class StateGetItemsReport extends State<GetItemsReport> {
                           child: ComponentText(
                               type: 'table_text', text: dt.createdAt))),
                   const TableCell(child: SizedBox()),
-                  const TableCell(child: SizedBox()),
+                  TableCell(
+                      child: DeleteReportItem(
+                          id: dt.id,
+                          inventoryName: dt.itemName,
+                          reportTitle: widget.reportName,
+                          onReload: widget.onReload)),
                 ],
               );
             }).toList(),
