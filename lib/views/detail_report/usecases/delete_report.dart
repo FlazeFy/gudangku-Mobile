@@ -2,30 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/api/report/service/commands.dart';
+import 'package:gudangku/modules/component/button.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
 import 'package:gudangku/modules/component/dialog/success_dialog.dart';
+import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/component/text.dart';
+import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 
-class DeleteReportItem extends StatefulWidget {
+class DeleteReport extends StatefulWidget {
   final String id;
-  final String inventoryName;
-  final String reportTitle;
-  final VoidCallback onReload;
 
-  const DeleteReportItem(
-      {Key? key,
-      required this.id,
-      required this.inventoryName,
-      required this.reportTitle,
-      required this.onReload})
-      : super(key: key);
+  const DeleteReport({Key? key, required this.id}) : super(key: key);
 
   @override
-  StateDeleteReportItem createState() => StateDeleteReportItem();
+  StateDeleteReport createState() => StateDeleteReport();
 }
 
-class StateDeleteReportItem extends State<DeleteReportItem> {
+class StateDeleteReport extends State<DeleteReport> {
   late ReportCommandsService apiReportCommand;
 
   @override
@@ -39,8 +33,8 @@ class StateDeleteReportItem extends State<DeleteReportItem> {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(spaceSM),
-        child: IconButton(
-          onPressed: () {
+        child: InkWell(
+          onTap: () {
             Get.dialog(AlertDialog(
               contentPadding: EdgeInsets.zero,
               title: null,
@@ -79,8 +73,8 @@ class StateDeleteReportItem extends State<DeleteReportItem> {
                             left: spaceMD, right: spaceMD, bottom: spaceMD),
                         child: Column(children: [
                           const SizedBox(height: spaceMD),
-                          Text(
-                            'Remove this item "${widget.inventoryName}" from report "${widget.reportTitle}"?',
+                          const Text(
+                            'Are you sure want to Permentally Delete this report?',
                             textAlign: TextAlign.start,
                           ),
                           const SizedBox(height: spaceMD),
@@ -98,20 +92,19 @@ class StateDeleteReportItem extends State<DeleteReportItem> {
                                 ),
                                 onPressed: () {
                                   apiReportCommand
-                                      .deleteReportInventoryByItemId(widget.id)
+                                      .deleteReportById(widget.id)
                                       .then((response) {
                                     setState(() => {});
                                     var status = response[0]['status'];
                                     var msg = response[0]['message'];
 
                                     if (status == "success") {
-                                      widget.onReload();
-                                      Get.back();
+                                      selectedIndex = 2;
+                                      Get.to(const BottomBar());
                                       Get.dialog(SuccessDialog(text: msg));
                                     } else {
                                       Get.dialog(FailedDialog(
-                                          text: msg,
-                                          type: "deletereportinventory"));
+                                          text: msg, type: "deletereport"));
                                     }
                                   });
                                 },
@@ -125,13 +118,11 @@ class StateDeleteReportItem extends State<DeleteReportItem> {
               ),
             ));
           },
-          icon: const FaIcon(FontAwesomeIcons.fire),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-            foregroundColor: MaterialStateProperty.all(whiteColor),
-            side: MaterialStateProperty.all(
-                const BorderSide(color: dangerBG, width: 1.5)),
-          ),
+          child: const ComponentButton(
+              type: 'button_danger',
+              text: 'Delete',
+              icon: FaIcon(FontAwesomeIcons.trash,
+                  color: whiteColor, size: textLG)),
         ));
   }
 }

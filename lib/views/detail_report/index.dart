@@ -5,6 +5,7 @@ import 'package:gudangku/modules/component/appbar.dart';
 import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/detail_report/usecases/delete_report.dart';
 import 'package:gudangku/views/detail_report/usecases/get_detail_report.dart';
 import 'package:gudangku/views/detail_report/usecases/get_items_report.dart';
 
@@ -61,9 +62,14 @@ class StateDetailReportPageState extends State<DetailReportPage> {
           extraButton: [getRestTimeDialog('Dictionary', dctFetchRestTime)],
         ),
         body: ListView(
-          padding: const EdgeInsets.only(
-              top: spaceJumbo, left: spaceMD, right: spaceMD),
+          padding: const EdgeInsets.symmetric(horizontal: spaceMD),
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [DeleteReport(id: detail.id)],
+            ),
+            const Divider(),
+            const SizedBox(height: spaceMD),
             GetDetailReport(data: detail),
             const SizedBox(height: spaceMD),
             GetItemsReport(

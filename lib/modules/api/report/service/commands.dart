@@ -9,7 +9,7 @@ class ReportCommandsService {
 
   Client client = Client();
 
-  Future<List<Map<String, dynamic>>> deleteReportInventoryById(
+  Future<List<Map<String, dynamic>>> deleteReportInventoryByItemId(
       String id) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
@@ -20,6 +20,34 @@ class ReportCommandsService {
     };
     final response = await client.delete(
       Uri.parse("$emuUrl/api/v1/report/delete/item/$id"),
+      headers: header,
+    );
+
+    var responseData = jsonDecode(response.body);
+    if ([200, 404, 401, 500].contains(response.statusCode)) {
+      return [
+        {
+          "status": responseData["status"],
+          "message": responseData["message"],
+        }
+      ];
+    } else {
+      return [
+        {"status": "failed", "message": "something wrong. please contact admin"}
+      ];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> deleteReportById(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+    final response = await client.delete(
+      Uri.parse("$emuUrl/api/v1/report/delete/report/$id"),
       headers: header,
     );
 
