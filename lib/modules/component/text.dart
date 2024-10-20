@@ -10,13 +10,19 @@ class ComponentText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (type == 'table_text') {
-      return Text(text, style: const TextStyle(fontSize: textSM));
+      return Text(text, style: const TextStyle(fontSize: textMD));
     } else if (type == 'appbar_text') {
       return Text(text,
           style: const TextStyle(
               fontSize: textJumbo,
               fontWeight: FontWeight.bold,
               color: whiteColor));
+    } else if (type == 'page_title') {
+      return Container(
+          margin: const EdgeInsets.only(bottom: spaceMD),
+          child: Text(text,
+              style: const TextStyle(
+                  fontSize: textJumbo, fontWeight: FontWeight.w700)));
     } else if (type == 'content_title') {
       return Container(
           margin: const EdgeInsets.only(bottom: spaceSM),

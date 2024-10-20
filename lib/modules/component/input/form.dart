@@ -4,7 +4,7 @@ import 'package:gudangku/modules/global/style.dart';
 class ComponentInput extends StatelessWidget {
   final dynamic ctrl;
   final String type;
-  final String hinttext;
+  final String? hinttext;
   final bool? secure;
   final int? maxLength;
   final int? minLength;
@@ -15,7 +15,7 @@ class ComponentInput extends StatelessWidget {
       {super.key,
       required this.ctrl,
       required this.type,
-      required this.hinttext,
+      this.hinttext,
       this.secure,
       this.maxLength,
       this.minLength,
@@ -58,17 +58,25 @@ class ComponentInput extends StatelessWidget {
         ),
       );
     } else {
-      return Row(children: [
-        Checkbox(
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Checkbox(
             checkColor: successBG,
             fillColor: MaterialStateProperty.all(Colors.transparent),
             value: ctrl,
             side: const BorderSide(color: primaryColor),
             activeColor: primaryColor,
-            onChanged: action),
-        Text(hinttext,
-            style: const TextStyle(color: whiteColor, fontSize: textMD))
-      ]);
+            onChanged: action,
+          ),
+          hinttext != null
+              ? Text(
+                  hinttext ?? '',
+                  style: const TextStyle(color: whiteColor, fontSize: textMD),
+                )
+              : const SizedBox(),
+        ],
+      );
     }
   }
 }

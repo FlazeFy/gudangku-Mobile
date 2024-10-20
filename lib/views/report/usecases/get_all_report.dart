@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gudangku/modules/api/history/model/queries.dart';
 import 'package:gudangku/modules/api/report/model/queries.dart';
 import 'package:gudangku/modules/api/report/service/queries.dart';
@@ -6,6 +7,7 @@ import 'package:gudangku/modules/component/button.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/detail_report/index.dart';
 
 class GetAllReport extends StatefulWidget {
   const GetAllReport({super.key});
@@ -59,53 +61,61 @@ class StateGetAllReport extends State<GetAllReport> {
     if (data.isNotEmpty) {
       return Column(
         children: data.map<Widget>((dt) {
-          return Container(
-            padding: const EdgeInsets.all(spaceMD),
-            decoration: BoxDecoration(
-                border: Border.all(width: spaceMini / 2, color: primaryColor),
-                borderRadius:
-                    const BorderRadius.all(Radius.circular(roundedLG))),
-            margin: const EdgeInsets.only(bottom: spaceMD),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          return InkWell(
+              onTap: () {
+                Get.to(DetailReportPage(id: dt.id));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(spaceMD),
+                decoration: BoxDecoration(
+                    border:
+                        Border.all(width: spaceMini / 2, color: primaryColor),
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(roundedLG))),
+                margin: const EdgeInsets.only(bottom: spaceMD),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ComponentText(type: 'content_title', text: dt.reportTitle),
-                    const Spacer(),
-                    ComponentButton(type: 'button_tag', text: dt.reportCategory)
+                    Row(
+                      children: [
+                        ComponentText(
+                            type: 'content_title', text: dt.reportTitle),
+                        const Spacer(),
+                        ComponentButton(
+                            type: 'button_tag', text: dt.reportCategory)
+                      ],
+                    ),
+                    dt.reportDesc != ''
+                        ? ComponentText(
+                            type: 'content_body', text: dt.reportDesc ?? '-')
+                        : const ComponentText(
+                            type: 'no_data', text: 'No description provided'),
+                    const SizedBox(height: spaceMD),
+                    const ComponentText(
+                        type: 'content_sub_title', text: 'Items :'),
+                    dt.reportItems != ''
+                        ? ComponentText(
+                            type: 'content_body', text: dt.reportItems ?? '-')
+                        : const ComponentText(
+                            type: 'no_data', text: 'No items found'),
+                    const SizedBox(height: spaceMD),
+                    dt.reportCategory == 'Shopping Cart' ||
+                            dt.reportCategory == 'Wishlist'
+                        ? Row(
+                            children: [
+                              ComponentText(
+                                  type: 'content_title',
+                                  text: 'Total Price : Rp. ${dt.itemPrice}'),
+                              const Spacer(),
+                              ComponentText(
+                                  type: 'content_title',
+                                  text: 'Total Item : ${dt.totalItem}')
+                            ],
+                          )
+                        : const SizedBox()
                   ],
                 ),
-                dt.reportDesc != ''
-                    ? ComponentText(
-                        type: 'content_body', text: dt.reportDesc ?? '-')
-                    : const ComponentText(
-                        type: 'no_data', text: 'No description provided'),
-                const SizedBox(height: spaceMD),
-                const ComponentText(type: 'content_sub_title', text: 'Items :'),
-                dt.reportItems != ''
-                    ? ComponentText(
-                        type: 'content_body', text: dt.reportItems ?? '-')
-                    : const ComponentText(
-                        type: 'no_data', text: 'No items found'),
-                const SizedBox(height: spaceMD),
-                dt.reportCategory == 'Shopping Cart' ||
-                        dt.reportCategory == 'Wishlist'
-                    ? Row(
-                        children: [
-                          ComponentText(
-                              type: 'content_title',
-                              text: 'Total Price : Rp. ${dt.itemPrice}'),
-                          const Spacer(),
-                          ComponentText(
-                              type: 'content_title',
-                              text: 'Total Item : ${dt.totalItem}')
-                        ],
-                      )
-                    : const SizedBox()
-              ],
-            ),
-          );
+              ));
         }).toList(),
       );
     } else {

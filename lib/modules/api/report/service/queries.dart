@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:gudangku/modules/api/report/model/queries.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
@@ -23,6 +25,32 @@ class ReportQueriesService {
       return [];
     } else {
       return [];
+    }
+  }
+
+  Future<Map<String, dynamic>?> getDetailReport(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.get(
+        Uri.parse("$emuUrl/api/v1/report/detail/item/$id"),
+        headers: header);
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      ReportDetailModel detail = ReportDetailModel.fromJson(jsonData['data']);
+      List<InventoryReportModel> items =
+          inventoryModelFromJson(jsonData['data_item']);
+
+      return {
+        'detail': detail,
+        'items': items,
+      };
+    } else {
+      return null;
     }
   }
 }

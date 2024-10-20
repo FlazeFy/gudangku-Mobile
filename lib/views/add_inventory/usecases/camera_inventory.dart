@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class CameraInventory extends StatefulWidget {

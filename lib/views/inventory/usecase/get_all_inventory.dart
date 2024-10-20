@@ -237,9 +237,11 @@ class StateGetAllInventory extends State<GetAllInventory> {
                     TableCell(
                         child: Padding(
                             padding: const EdgeInsets.all(spaceXSM),
-                            child: ComponentText(
-                                type: 'table_text',
-                                text: dt.inventoryCategory))),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: ComponentText(
+                                    type: 'table_text',
+                                    text: dt.inventoryCategory)))),
                     TableCell(
                         child: Padding(
                             padding: const EdgeInsets.all(spaceXSM),
@@ -249,13 +251,19 @@ class StateGetAllInventory extends State<GetAllInventory> {
                     TableCell(
                         child: Padding(
                             padding: const EdgeInsets.all(spaceXSM),
-                            child: ComponentText(
-                                type: 'table_text', text: dt.inventoryMerk))),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: ComponentText(
+                                    type: 'table_text',
+                                    text: dt.inventoryMerk)))),
                     TableCell(
                         child: Padding(
                             padding: const EdgeInsets.all(spaceXSM),
-                            child: ComponentText(
-                                type: 'table_text', text: dt.inventoryRoom))),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: ComponentText(
+                                    type: 'table_text',
+                                    text: dt.inventoryRoom)))),
                     TableCell(
                         child: Padding(
                             padding: const EdgeInsets.all(spaceXSM),
@@ -272,17 +280,21 @@ class StateGetAllInventory extends State<GetAllInventory> {
                     TableCell(
                         child: Padding(
                             padding: const EdgeInsets.all(spaceXSM),
-                            child: ComponentText(
-                                type: 'table_text',
-                                text:
-                                    "${dt.inventoryVol} ${dt.inventoryUnit}"))),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: ComponentText(
+                                    type: 'table_text',
+                                    text:
+                                        "${dt.inventoryVol} ${dt.inventoryUnit}")))),
                     TableCell(
                         child: Padding(
                             padding: const EdgeInsets.all(spaceXSM),
-                            child: ComponentText(
-                                type: 'table_text',
-                                text:
-                                    "${dt.inventoryCapacityVol ?? "-"} ${dt.inventoryCapacityUnit == "percentage" ? "%" : "-"}"))),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: ComponentText(
+                                    type: 'table_text',
+                                    text:
+                                        "${dt.inventoryCapacityVol ?? "-"} ${dt.inventoryCapacityUnit == "percentage" ? "%" : "-"}")))),
                     TableCell(
                         child: PropsInventory(
                             createdAt: dt.createdAt,
