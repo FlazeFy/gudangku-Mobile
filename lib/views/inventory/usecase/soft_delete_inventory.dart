@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/service/commands.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
 import 'package:gudangku/modules/component/dialog/success_dialog.dart';
-import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
 

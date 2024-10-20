@@ -34,7 +34,7 @@ class ComponentText extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: spaceMini),
           child: Text(text,
               style: const TextStyle(
-                  fontSize: textSM,
+                  fontSize: textMD,
                   fontWeight: FontWeight.normal,
                   color: whiteColor)));
     } else if (type == 'no_data') {
@@ -42,7 +42,7 @@ class ComponentText extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: spaceMini),
           child: Text("- $text -",
               style: const TextStyle(
-                  fontSize: textSM,
+                  fontSize: textMD,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.normal,
                   color: greyColor)));

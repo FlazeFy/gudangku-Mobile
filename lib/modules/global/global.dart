@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -26,6 +27,9 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 bool isOffline = false;
+
+// Camera
+FlashMode flashMode = FlashMode.off;
 
 // API Fetch rest time
 int dctFetchRestTime = 300; // in second

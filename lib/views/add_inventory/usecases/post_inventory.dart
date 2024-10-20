@@ -11,6 +11,7 @@ import 'package:gudangku/modules/component/input/label.dart';
 import 'package:gudangku/modules/component/others.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/add_inventory/usecases/preview_image.dart';
 import 'package:gudangku/views/inventory/index.dart';
 import 'package:gudangku/views/others/get_dct.dart';
 
@@ -50,6 +51,31 @@ class StatePostInventoryState extends State<PostInventory> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const ComponentText(type: 'content_title', text: 'Image'),
+        const PreviewImage(),
+        Container(
+            margin: const EdgeInsets.symmetric(vertical: spaceMD),
+            child: RichText(
+                text: const TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: spaceMini),
+                    child: FaIcon(FontAwesomeIcons.circleInfo,
+                        color: whiteColor, size: textXMD),
+                  ),
+                ),
+                TextSpan(
+                  text:
+                      "Maximum size of uploaded image is 10 mb and have file type JPG, PNG, or JPEG",
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: textXMD,
+                  ),
+                ),
+              ],
+            ))),
+        const SizedBox(height: spaceMD),
         const ComponentText(type: 'content_title', text: 'Inventory Detail'),
         getInputLabel("Name"),
         ComponentInput(
