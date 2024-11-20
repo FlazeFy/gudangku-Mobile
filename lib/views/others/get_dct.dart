@@ -63,58 +63,61 @@ class StateGetAllDctByType extends State<GetAllDctByType> {
 
   Widget _buildListView(List<DctModel> data) {
     if (data.isNotEmpty) {
-      return DropdownButtonFormField2<String>(
-        isExpanded: true,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: spaceMD),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(roundedMD),
-              borderSide: const BorderSide(color: primaryColor)),
-        ),
-        hint: const Text(
-          'Select Total Type',
-          style: TextStyle(fontSize: textMD, color: whiteColor),
-        ),
-        value: selectedValue,
-        items: data
-            .map((item) => DropdownMenuItem<String>(
-                  value: item.dctName,
-                  child: Text(
-                    ucAll(item.dctName),
-                    style: const TextStyle(fontSize: textMD, color: whiteColor),
-                  ),
-                ))
-            .toList(),
-        validator: (value) {
-          if (value == null) {
-            return 'Please select total type';
-          }
-          return null;
-        },
-        onChanged: (value) {
-          setState(() {
-            selectedValue = value;
-          });
-          widget.action(value);
-        },
-        iconStyleData: const IconStyleData(
-          icon: Icon(
-            Icons.arrow_drop_down,
-            color: whiteColor,
-          ),
-          iconSize: textJumbo,
-        ),
-        dropdownStyleData: DropdownStyleData(
-          decoration: BoxDecoration(
-              color: darkColor,
-              borderRadius: BorderRadius.circular(roundedLG),
-              border:
-                  Border.all(color: whiteColor.withOpacity(0.75), width: 1)),
-        ),
-        menuItemStyleData: const MenuItemStyleData(
-          padding: EdgeInsets.symmetric(horizontal: spaceMD),
-        ),
-      );
+      return Container(
+          margin: const EdgeInsets.only(bottom: spaceSM),
+          child: DropdownButtonFormField2<String>(
+            isExpanded: true,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(vertical: spaceMD),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(roundedMD),
+                  borderSide: const BorderSide(color: primaryColor)),
+            ),
+            hint: const Text(
+              'Select Total Type',
+              style: TextStyle(fontSize: textMD, color: whiteColor),
+            ),
+            value: selectedValue,
+            items: data
+                .map((item) => DropdownMenuItem<String>(
+                      value: item.dctName,
+                      child: Text(
+                        ucAll(item.dctName),
+                        style: const TextStyle(
+                            fontSize: textMD, color: whiteColor),
+                      ),
+                    ))
+                .toList(),
+            validator: (value) {
+              if (value == null) {
+                return 'Please select total type';
+              }
+              return null;
+            },
+            onChanged: (value) {
+              setState(() {
+                selectedValue = value;
+              });
+              widget.action(value);
+            },
+            iconStyleData: const IconStyleData(
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: whiteColor,
+              ),
+              iconSize: textJumbo,
+            ),
+            dropdownStyleData: DropdownStyleData(
+              decoration: BoxDecoration(
+                  color: darkColor,
+                  borderRadius: BorderRadius.circular(roundedLG),
+                  border: Border.all(
+                      color: whiteColor.withOpacity(0.75), width: 1)),
+            ),
+            menuItemStyleData: const MenuItemStyleData(
+              padding: EdgeInsets.symmetric(horizontal: spaceMD),
+            ),
+          ));
     } else {
       return const Text("Unknown error, please contact the admin");
     }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/detail_inventory/index.dart';
 import 'package:gudangku/views/inventory/usecase/put_recover_inventory.dart';
 import 'package:gudangku/views/inventory/usecase/put_favorite_toogle.dart';
 import 'package:gudangku/views/inventory/usecase/get_inventory_props.dart';
@@ -313,7 +316,24 @@ class StateGetAllInventory extends State<GetAllInventory> {
                                 inventoryName: dt.inventoryName,
                                 onReload: loadData,
                               )
-                            : const SizedBox()),
+                            : Container(
+                                margin: const EdgeInsets.all(spaceSM),
+                                child: IconButton(
+                                  onPressed: () {
+                                    Get.to(EditInventoryPage(id: dt.id));
+                                  },
+                                  icon: const FaIcon(
+                                      FontAwesomeIcons.penToSquare),
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                    foregroundColor:
+                                        MaterialStateProperty.all(whiteColor),
+                                    side: MaterialStateProperty.all(
+                                        const BorderSide(
+                                            color: warningBG, width: 1.5)),
+                                  ),
+                                ))),
                     TableCell(
                         child: dt.deletedAt == ""
                             ? SoftDeleteInventory(

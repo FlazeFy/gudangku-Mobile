@@ -61,7 +61,7 @@ class InventoryAllModel {
       isFavorite: map["is_favorite"] == 1,
       isReminder: map["is_reminder"] == 1,
       createdAt: map["created_at"] ?? "",
-      createdBy: map["created_by"],
+      createdBy: map["created_by"] ?? "",
       updatedAt: map["updated_at"] ?? "",
       deletedAt: map["deleted_at"] ?? "",
     );
@@ -72,4 +72,9 @@ List<InventoryAllModel> inventoryAllModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return List<InventoryAllModel>.from(
       data['data']['data'].map((item) => InventoryAllModel.fromJson(item)));
+}
+
+InventoryAllModel inventoryModelFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return InventoryAllModel.fromJson(data['data']);
 }

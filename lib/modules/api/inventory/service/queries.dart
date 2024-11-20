@@ -25,4 +25,23 @@ class InventoryQueriesService {
       return [];
     }
   }
+
+  Future<InventoryAllModel?> getDetailInventory(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client
+        .get(Uri.parse("$emuUrl/api/v1/inventory/detail/$id"), headers: header);
+    if (response.statusCode == 200) {
+      return inventoryModelFromJson(response.body);
+    } else if (response.statusCode == 401) {
+      return null;
+    } else {
+      return null;
+    }
+  }
 }
