@@ -15,6 +15,7 @@ int pageAllHistory = 1;
 
 // Content - Select
 String statsType = 'item';
+XFile? capturedImage;
 
 // Firebase
 String? token;

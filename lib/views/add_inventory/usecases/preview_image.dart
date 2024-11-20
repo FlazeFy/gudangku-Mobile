@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:gudangku/modules/global/global.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/component/button.dart';
@@ -15,6 +19,66 @@ class PreviewImage extends StatefulWidget {
 }
 
 class StatePreviewImageState extends State<PreviewImage> {
+  Future<XFile?> getImage() async {
+    return await ImagePicker().pickImage(source: ImageSource.gallery);
+  }
+
+  getImageAction(bool isSet) {
+    return Container(
+        padding: const EdgeInsets.only(top: spaceSM),
+        child: !isSet
+            ? Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.to(const CameraInventory());
+                    },
+                    child: const ComponentButton(
+                      type: 'button_primary',
+                      text: 'Capture',
+                      icon: FaIcon(FontAwesomeIcons.camera,
+                          color: whiteColor, size: textLG),
+                    ),
+                  ),
+                  const Spacer(),
+                  InkWell(
+                    onTap: () async {
+                      var file = await getImage();
+
+                      if (file != null) {
+                        setState(() {
+                          capturedImage = file;
+                        });
+                      }
+                    },
+                    child: const ComponentButton(
+                      type: 'button_primary',
+                      text: 'File Picker',
+                      icon: FaIcon(FontAwesomeIcons.folder,
+                          color: whiteColor, size: textLG),
+                    ),
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        capturedImage = null;
+                      });
+                    },
+                    child: const ComponentButton(
+                      type: 'button_danger',
+                      text: 'Reset',
+                      icon: FaIcon(FontAwesomeIcons.rotateLeft,
+                          color: whiteColor, size: textLG),
+                    ),
+                  ),
+                ],
+              ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -29,48 +93,42 @@ class StatePreviewImageState extends State<PreviewImage> {
               color: primaryColor,
               strokeWidth: 1,
               child: Container(
-                padding: const EdgeInsets.all(spaceLG),
+                padding:
+                    EdgeInsets.all(capturedImage == null ? spaceLG : spaceXSM),
                 width: double.infinity,
                 height: double.infinity,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(roundedMD)),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const FaIcon(FontAwesomeIcons.image,
-                        color: greyColor, size: textJumbo),
-                    const ComponentText(
-                        type: 'no_data', text: 'no image has been selected'),
-                    const SizedBox(height: spaceMD),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Get.to(const CameraInventory());
-                          },
-                          child: const ComponentButton(
-                            type: 'button_primary',
-                            text: 'Capture Image',
-                            icon: FaIcon(FontAwesomeIcons.camera,
-                                color: whiteColor, size: textLG),
+                child: capturedImage == null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const FaIcon(FontAwesomeIcons.image,
+                              color: greyColor, size: textJumbo),
+                          const ComponentText(
+                              type: 'no_data',
+                              text: 'no image has been selected'),
+                          getImageAction(false)
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          Expanded(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(roundedMD),
+                              child: Image.file(
+                                File(capturedImage!
+                                    .path), // Display the captured image
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              ),
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {},
-                          child: const ComponentButton(
-                            type: 'button_primary',
-                            text: 'File Picker',
-                            icon: FaIcon(FontAwesomeIcons.folder,
-                                color: whiteColor, size: textLG),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                          getImageAction(true)
+                        ],
+                      ),
               ),
             )),
         onTap: () {

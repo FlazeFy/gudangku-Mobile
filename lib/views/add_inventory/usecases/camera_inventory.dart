@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
+import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/add_inventory/index.dart';
 
 class CameraInventory extends StatefulWidget {
   const CameraInventory({super.key});
@@ -47,14 +49,17 @@ class StateCameraInventoryState extends State<CameraInventory>
       final imageFile = await cameraCtrl?.takePicture();
       return imageFile;
     } catch (e) {
+      e.printError();
       Get.snackbar("Error", "Failed to capture image");
-      return null; // Return null in case of error
+      return null;
     }
   }
 
   void navigateToShowImage(XFile imageFile) {
-    // Add navigation logic here, for example:
-    // Get.to(() => ShowImage(path: imageFile.path));
+    setState(() {
+      capturedImage = imageFile;
+    });
+    Get.to(const AddInventoryPage());
   }
 
   @override

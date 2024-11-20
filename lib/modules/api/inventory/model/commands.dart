@@ -52,7 +52,7 @@ class InventoryModel {
     required this.isReminder,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<dynamic, dynamic> toJson() {
     return {
       "inventory_name": inventoryName,
       "inventory_category": inventoryCategory,
