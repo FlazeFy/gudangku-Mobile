@@ -24,6 +24,16 @@ class ComponentButton extends StatelessWidget {
                 fontSize: textXMD,
                 fontWeight: FontWeight.w500)),
       );
+    } else if (type == 'button_text') {
+      return Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: spaceMD, vertical: spaceMini),
+        child: Text(text,
+            style: const TextStyle(
+                color: whiteColor,
+                fontSize: textXMD,
+                fontWeight: FontWeight.w500)),
+      );
     } else if (type == 'button_primary') {
       return Container(
           padding: const EdgeInsets.symmetric(

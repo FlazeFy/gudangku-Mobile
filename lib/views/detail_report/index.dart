@@ -3,6 +3,7 @@ import 'package:gudangku/modules/api/report/model/queries.dart';
 import 'package:gudangku/modules/api/report/service/queries.dart';
 import 'package:gudangku/modules/component/appbar.dart';
 import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
+import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/detail_report/usecases/delete_report.dart';
@@ -73,7 +74,10 @@ class StateDetailReportPageState extends State<DetailReportPage> {
             GetDetailReport(data: detail),
             const SizedBox(height: spaceMD),
             GetItemsReport(
-                data: items, reportName: detail.reportTitle, onReload: loadData)
+                data: items,
+                reportName: detail.reportTitle,
+                onReload: loadData),
+            const FooterBar()
           ],
         ));
   }

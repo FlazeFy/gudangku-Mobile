@@ -4,8 +4,15 @@ import 'package:gudangku/modules/global/style.dart';
 class ComponentText extends StatelessWidget {
   final String type;
   final String text;
+  final TextAlign? align;
+  final Color? color;
 
-  const ComponentText({super.key, required this.type, required this.text});
+  const ComponentText(
+      {super.key,
+      required this.type,
+      required this.text,
+      this.align,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +28,11 @@ class ComponentText extends StatelessWidget {
       return Container(
           margin: const EdgeInsets.only(bottom: spaceMD),
           child: Text(text,
-              style: const TextStyle(
-                  fontSize: textJumbo, fontWeight: FontWeight.w700)));
+              textAlign: align ?? TextAlign.start,
+              style: TextStyle(
+                  color: color ?? whiteColor,
+                  fontSize: textJumbo,
+                  fontWeight: FontWeight.w700)));
     } else if (type == 'content_title') {
       return Container(
           margin: const EdgeInsets.only(bottom: spaceSM),
@@ -33,12 +43,15 @@ class ComponentText extends StatelessWidget {
       return Container(
           margin: const EdgeInsets.only(bottom: spaceMini),
           child: Text(text,
-              style: const TextStyle(
-                  fontSize: textXMD, fontWeight: FontWeight.w500)));
+              style: TextStyle(
+                  color: color ?? whiteColor,
+                  fontSize: textXMD,
+                  fontWeight: FontWeight.w500)));
     } else if (type == 'content_body') {
       return Container(
           margin: const EdgeInsets.only(bottom: spaceMini),
           child: Text(text,
+              textAlign: align ?? TextAlign.start,
               style: const TextStyle(
                   fontSize: textMD,
                   fontWeight: FontWeight.normal,

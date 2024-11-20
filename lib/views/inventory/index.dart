@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/component/appbar.dart';
 import 'package:gudangku/modules/component/button.dart';
+import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/add_inventory/index.dart';
 import 'package:gudangku/views/inventory/usecase/get_all_inventory.dart';
@@ -57,7 +58,8 @@ class StateInventoryPageState extends State<InventoryPage> {
               ],
             ),
             const SizedBox(height: spaceMD),
-            const GetAllInventory()
+            const GetAllInventory(),
+            const FooterBar()
           ],
         ));
   }

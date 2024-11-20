@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/login/usecases/post_login.dart';
 
@@ -45,7 +46,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () {},
                   child:
-                      const Text("Register", style: TextStyle(fontSize: 15))))
+                      const Text("Register", style: TextStyle(fontSize: 15)))),
+          const SizedBox(height: spaceLG),
+          const FooterBar()
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gudangku/modules/component/appbar.dart';
 import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
+import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/detail_inventory/usecases/get_detail_inventory.dart';
@@ -26,7 +27,8 @@ class StateEditInventoryPageState extends State<EditInventoryPage> {
           padding: const EdgeInsets.symmetric(horizontal: spaceMD),
           children: [
             const SizedBox(height: spaceMD),
-            GetDetailInventory(id: widget.id)
+            GetDetailInventory(id: widget.id),
+            const FooterBar()
           ],
         ));
   }

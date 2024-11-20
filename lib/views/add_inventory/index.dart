@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gudangku/modules/component/appbar.dart';
 import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
+import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/add_inventory/usecases/post_inventory.dart';
@@ -23,7 +24,7 @@ class StateAddInventoryPageState extends State<AddInventoryPage> {
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: spaceMD),
-          children: const [PostInventory()],
+          children: const [PostInventory(), FooterBar()],
         ));
   }
 }
