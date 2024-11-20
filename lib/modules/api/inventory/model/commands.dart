@@ -72,6 +72,27 @@ class InventoryModel {
       "is_reminder": isReminder,
     };
   }
+
+  factory InventoryModel.fromJson(Map<String, dynamic> map) {
+    return InventoryModel(
+      inventoryName: map['inventory_name'],
+      inventoryCategory: map['inventory_category'],
+      inventoryDesc: map['inventory_desc'],
+      inventoryMerk: map['inventory_merk'],
+      inventoryRoom: map['inventory_room'],
+      inventoryStorage: map['inventory_storage'],
+      inventoryRack: map['inventory_rack'],
+      inventoryPrice: map['inventory_price'],
+      inventoryImage: map['inventory_image'],
+      inventoryUnit: map['inventory_unit'],
+      inventoryVol: map['inventory_vol'],
+      inventoryCapacityUnit: map['inventory_capacity_unit'],
+      inventoryCapacityVol: map['inventory_capacity_vol'],
+      inventoryColor: map['inventory_color'],
+      isFavorite: map['is_favorite'],
+      isReminder: map['is_reminder'],
+    );
+  }
 }
 
 String inventoryModelToJson(InventoryModel data) {

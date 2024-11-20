@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:gudangku/modules/api/inventory/model/commands.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' show Client;
@@ -26,7 +29,7 @@ class InventoryQueriesService {
     }
   }
 
-  Future<InventoryAllModel?> getDetailInventory(String id) async {
+  Future<Map<String, dynamic>?> getDetailInventory(String id) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');
     final header = {
@@ -37,9 +40,15 @@ class InventoryQueriesService {
     final response = await client
         .get(Uri.parse("$emuUrl/api/v1/inventory/detail/$id"), headers: header);
     if (response.statusCode == 200) {
-      return inventoryModelFromJson(response.body);
-    } else if (response.statusCode == 401) {
-      return null;
+      final jsonData = json.decode(response.body);
+      InventoryModel detail = InventoryModel.fromJson(jsonData['data']);
+      List<ReminderModel> reminder =
+          reminderInventoryModelFromJson(jsonData['reminder']);
+
+      return {
+        'detail': detail,
+        'reminder': reminder,
+      };
     } else {
       return null;
     }

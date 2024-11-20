@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gudangku/modules/api/inventory/model/commands.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
 import 'package:gudangku/modules/component/input/form.dart';
@@ -7,6 +8,7 @@ import 'package:gudangku/modules/component/input/label.dart';
 import 'package:gudangku/modules/component/others.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/detail_inventory/usecases/get_reminder.dart';
 import 'package:gudangku/views/others/get_dct.dart';
 
 class GetDetailInventory extends StatefulWidget {
@@ -35,7 +37,8 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
   String allMsg = "";
   late InventoryQueriesService apiInventoryQuery;
   int i = 0;
-  late InventoryAllModel detail;
+  late InventoryModel detail;
+  late List<ReminderModel> reminder;
   bool isLoading = false;
 
   @override
@@ -52,10 +55,10 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
     var data = await apiInventoryQuery.getDetailInventory(widget.id);
     setState(() {
       if (data != null) {
-        detail = data;
+        detail = data?['detail'];
+        reminder = data?['reminder'];
       } else {
-        detail = InventoryAllModel(
-          id: '',
+        detail = InventoryModel(
           inventoryName: '',
           inventoryCategory: '',
           inventoryMerk: '',
@@ -63,10 +66,8 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
           inventoryPrice: 0,
           inventoryUnit: '',
           inventoryVol: 0,
-          isFavorite: false,
-          isReminder: false,
-          createdAt: '',
-          createdBy: '',
+          isFavorite: 0,
+          isReminder: 0,
         );
       }
       isLoading = false;
@@ -79,15 +80,15 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
       maintainBottomViewPadding: false,
       child: isLoading
           ? const Center(child: CircularProgressIndicator(color: primaryColor))
-          : _buildListView(detail),
+          : _buildListView(detail, reminder),
     );
   }
 
   @override
-  Widget _buildListView(InventoryAllModel detail) {
+  Widget _buildListView(InventoryModel detail, List<ReminderModel> reminder) {
     inventoryNameCtrl.text = detail.inventoryName;
     inventoryDescCtrl.text = detail.inventoryDesc ?? '';
-    inventoryMerkCtrl.text = detail.inventoryMerk;
+    inventoryMerkCtrl.text = detail.inventoryMerk ?? '';
     inventoryPriceCtrl.text = detail.inventoryPrice.toString();
     inventoryStorageCtrl.text = detail.inventoryStorage ?? '';
     inventoryRackCtrl.text = detail.inventoryRack ?? '';
@@ -233,6 +234,7 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
             secure: false,
             type: 'text'),
         const ComponentText(type: 'page_title', text: "Reminder"),
+        ...reminder.map((el) => GetReminder(data: el)).toList(),
         const ComponentText(type: 'page_title', text: "Report"),
       ],
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/api/history/model/queries.dart';
 import 'package:gudangku/modules/api/history/service/queries.dart';
+import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/history/usecase/hard_delete_history.dart';
@@ -60,7 +61,18 @@ class StateGetAllHistory extends State<GetAllHistory> {
               children: [
                 SizedBox(
                   width: Get.width * 0.75,
-                  child: Text("${e.historyType} ${e.historyContext}"),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ComponentText(
+                            type: 'content_sub_title',
+                            text: "${e.historyType} ${e.historyContext}"),
+                        ComponentText(
+                            type: 'content_body',
+                            color: greyColor,
+                            fstyle: FontStyle.italic,
+                            text: "Created At : ${e.createdAt}")
+                      ]),
                 ),
                 const Spacer(),
                 HardDeleteHistory(

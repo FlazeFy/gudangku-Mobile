@@ -6,13 +6,15 @@ class ComponentText extends StatelessWidget {
   final String text;
   final TextAlign? align;
   final Color? color;
+  final FontStyle? fstyle;
 
   const ComponentText(
       {super.key,
       required this.type,
       required this.text,
       this.align,
-      this.color});
+      this.color,
+      this.fstyle});
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +54,11 @@ class ComponentText extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: spaceMini),
           child: Text(text,
               textAlign: align ?? TextAlign.start,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: textMD,
+                  fontStyle: fstyle ?? FontStyle.normal,
                   fontWeight: FontWeight.normal,
-                  color: whiteColor)));
+                  color: color ?? whiteColor)));
     } else if (type == 'no_data') {
       return Container(
           margin: const EdgeInsets.only(bottom: spaceMini),

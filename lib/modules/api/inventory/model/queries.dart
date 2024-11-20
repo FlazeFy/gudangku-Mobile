@@ -78,3 +78,36 @@ InventoryAllModel inventoryModelFromJson(String jsonData) {
   final data = json.decode(jsonData);
   return InventoryAllModel.fromJson(data['data']);
 }
+
+class ReminderModel {
+  String id;
+  String reminderDesc;
+  String reminderType;
+  String reminderContext;
+  String createdAt;
+  String? updatedAt;
+
+  ReminderModel(
+      {required this.id,
+      required this.reminderDesc,
+      required this.reminderType,
+      required this.reminderContext,
+      required this.createdAt,
+      this.updatedAt});
+
+  factory ReminderModel.fromJson(Map<String, dynamic> map) {
+    return ReminderModel(
+        id: map["id"],
+        reminderDesc: map["reminder_desc"],
+        reminderType: map["reminder_type"],
+        reminderContext: map["reminder_context"],
+        createdAt: map["created_at"],
+        updatedAt: map["updated_at"]);
+  }
+}
+
+List<ReminderModel> reminderInventoryModelFromJson(List data) {
+  // final data = json.decode(jsonData);
+  return List<ReminderModel>.from(
+      data.map((item) => ReminderModel.fromJson(item)));
+}
