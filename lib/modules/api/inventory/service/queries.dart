@@ -42,8 +42,9 @@ class InventoryQueriesService {
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       InventoryModel detail = InventoryModel.fromJson(jsonData['data']);
-      List<ReminderModel> reminder =
-          reminderInventoryModelFromJson(jsonData['reminder']);
+      List<ReminderModel>? reminder = jsonData['reminder'] != null
+          ? reminderInventoryModelFromJson(jsonData['reminder'])
+          : null;
 
       return {
         'detail': detail,

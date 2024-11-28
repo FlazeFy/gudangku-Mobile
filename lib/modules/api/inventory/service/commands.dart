@@ -2,6 +2,7 @@ import 'dart:convert';
 
 // ignore: depend_on_referenced_packages
 import 'package:gudangku/modules/api/inventory/model/commands.dart';
+import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:http/http.dart' show Client;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,35 @@ class InventoryCommandsService {
 
     var responseData = jsonDecode(response.body);
     if ([200, 404, 401, 500].contains(response.statusCode)) {
+      return [
+        {
+          "status": responseData["status"],
+          "message": responseData["message"],
+        }
+      ];
+    } else {
+      return [
+        {"status": "failed", "message": "something wrong. please contact admin"}
+      ];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> postReminder(ReminderModel data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+    final response = await client.post(
+      Uri.parse("$emuUrl/api/v1/reminder"),
+      headers: header,
+      body: reminderModelToJson(data),
+    );
+
+    var responseData = jsonDecode(response.body);
+    if ([201, 404, 401, 500].contains(response.statusCode)) {
       return [
         {
           "status": responseData["status"],

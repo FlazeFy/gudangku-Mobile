@@ -9,6 +9,7 @@ import 'package:gudangku/modules/component/others.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/detail_inventory/usecases/get_reminder.dart';
+import 'package:gudangku/views/detail_inventory/usecases/post_reminder.dart';
 import 'package:gudangku/views/others/get_dct.dart';
 
 class GetDetailInventory extends StatefulWidget {
@@ -38,7 +39,7 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
   late InventoryQueriesService apiInventoryQuery;
   int i = 0;
   late InventoryModel detail;
-  late List<ReminderModel> reminder;
+  late List<ReminderModel>? reminder;
   bool isLoading = false;
 
   @override
@@ -85,7 +86,7 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
   }
 
   @override
-  Widget _buildListView(InventoryModel detail, List<ReminderModel> reminder) {
+  Widget _buildListView(InventoryModel detail, List<ReminderModel>? reminder) {
     inventoryNameCtrl.text = detail.inventoryName;
     inventoryDescCtrl.text = detail.inventoryDesc ?? '';
     inventoryMerkCtrl.text = detail.inventoryMerk ?? '';
@@ -234,7 +235,15 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
             secure: false,
             type: 'text'),
         const ComponentText(type: 'page_title', text: "Reminder"),
-        ...reminder.map((el) => GetReminder(data: el)).toList(),
+        reminder != null && reminder.isNotEmpty
+            ? Column(
+                children: reminder.map((el) => GetReminder(data: el)).toList(),
+              )
+            : PostReminder(
+                isExist: true,
+                id: widget.id,
+                inventoryName: detail.inventoryName,
+              ),
         const ComponentText(type: 'page_title', text: "Report"),
       ],
     );
