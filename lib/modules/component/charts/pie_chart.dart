@@ -7,7 +7,7 @@ Widget getPieChart(List<PieData> chartData, String title) {
   return SfCircularChart(
       title: ChartTitle(
           text: title, textStyle: const TextStyle(color: primaryColor)),
-      legend: const Legend(
+      legend: Legend(
           isVisible: true,
           padding: spaceLG,
           backgroundColor: darkColor,
@@ -16,7 +16,7 @@ Widget getPieChart(List<PieData> chartData, String title) {
           orientation: LegendItemOrientation.vertical,
           overflowMode: LegendItemOverflowMode.wrap,
           shouldAlwaysShowScrollbar: true,
-          textStyle: TextStyle(color: whiteColor),
+          textStyle: const TextStyle(color: whiteColor),
           borderColor: primaryColor),
       series: <CircularSeries>[
         PieSeries<PieData, String>(

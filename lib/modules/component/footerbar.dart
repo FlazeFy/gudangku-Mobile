@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/component/button.dart';
 import 'package:gudangku/modules/component/others.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/about/index.dart';
 import 'package:gudangku/views/features/index.dart';
 import 'package:gudangku/views/login/index.dart';
 
@@ -41,7 +42,12 @@ class FooterBarState extends State<FooterBar> {
             ),
             const ComponentButton(type: 'button_text', text: 'FAQs'),
             const ComponentButton(type: 'button_text', text: 'Help'),
-            const ComponentButton(type: 'button_text', text: 'About')
+            InkWell(
+              child: const ComponentButton(type: 'button_text', text: 'About'),
+              onTap: () {
+                Get.to(const AboutPage());
+              },
+            ),
           ],
         )
       ]),

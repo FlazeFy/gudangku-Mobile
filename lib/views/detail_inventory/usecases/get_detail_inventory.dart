@@ -56,8 +56,8 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
     var data = await apiInventoryQuery.getDetailInventory(widget.id);
     setState(() {
       if (data != null) {
-        detail = data?['detail'];
-        reminder = data?['reminder'];
+        detail = data['detail'];
+        reminder = data['reminder'];
       } else {
         detail = InventoryModel(
           inventoryName: '',
@@ -85,7 +85,6 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
     );
   }
 
-  @override
   Widget _buildListView(InventoryModel detail, List<ReminderModel>? reminder) {
     inventoryNameCtrl.text = detail.inventoryName;
     inventoryDescCtrl.text = detail.inventoryDesc ?? '';

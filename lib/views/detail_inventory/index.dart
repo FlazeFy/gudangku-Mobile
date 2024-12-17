@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:gudangku/modules/component/appbar.dart';
 import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
 import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/custom_doc/index.dart';
 import 'package:gudangku/views/detail_inventory/usecases/get_detail_inventory.dart';
 
 class EditInventoryPage extends StatefulWidget {
@@ -21,7 +24,17 @@ class StateEditInventoryPageState extends State<EditInventoryPage> {
         appBar: ComponentAppBar(
           title: 'Edit Inventory',
           isSubMenu: true,
-          extraButton: [getRestTimeDialog('Dictionary', dctFetchRestTime)],
+          extraButton: [
+            getRestTimeDialog('Dictionary', dctFetchRestTime),
+            IconButton(
+                onPressed: () {
+                  Get.to(CustomDocPage(id: widget.id, type: "inventory"));
+                },
+                icon: const FaIcon(
+                  FontAwesomeIcons.penToSquare,
+                  color: whiteColor,
+                ))
+          ],
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: spaceMD),

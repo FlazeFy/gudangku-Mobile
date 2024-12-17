@@ -200,7 +200,6 @@ class StatePostReminder extends State<PostReminder> {
                                                       .postReminder(data)
                                                       .then((response) {
                                                     setState(() => {});
-                                                    print(response);
                                                     var status =
                                                         response[0]['status'];
                                                     var msg =

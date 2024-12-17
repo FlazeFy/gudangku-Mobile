@@ -11,29 +11,29 @@ Widget getSplineChart(List<TwoLineData> chartData, String? title, String? extra,
             text: title,
             textStyle: const TextStyle(color: whiteColor, fontSize: 18),
           )
-        : const ChartTitle(),
-    legend: const Legend(
+        : ChartTitle(),
+    legend: Legend(
         isVisible: true,
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           color: whiteColor,
         )),
-    primaryXAxis: const CategoryAxis(
+    primaryXAxis: CategoryAxis(
       title: AxisTitle(
         text: '',
       ),
-      labelStyle: TextStyle(
+      labelStyle: const TextStyle(
         color: whiteColor,
       ),
     ),
-    primaryYAxis: const NumericAxis(
+    primaryYAxis: NumericAxis(
       title: AxisTitle(
         text: '',
       ),
-      labelStyle: TextStyle(
+      labelStyle: const TextStyle(
         color: whiteColor,
       ),
     ),
-    axes: const <ChartAxis>[
+    axes: <ChartAxis>[
       NumericAxis(
         name: 'secondaryYAxis',
         opposedPosition: true,

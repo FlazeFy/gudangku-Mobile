@@ -6,6 +6,7 @@ import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
 import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/about/index.dart';
 import 'package:gudangku/views/history/index.dart';
 import 'package:gudangku/views/profile/usecases/get_my_profile.dart';
 
@@ -31,7 +32,8 @@ class StateProfilePageState extends State<ProfilePage> {
           children: [
             const GetMyProfile(),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: spaceMD),
+              margin: const EdgeInsets.only(
+                  left: spaceMD, right: spaceMD, bottom: spaceMD),
               decoration: BoxDecoration(
                   border: Border.all(color: primaryColor, width: spaceMini / 2),
                   borderRadius:
@@ -45,7 +47,22 @@ class StateProfilePageState extends State<ProfilePage> {
                         color: whiteColor, fontWeight: FontWeight.w500)),
               ),
             ),
-            const FooterBar()
+            Container(
+              margin: const EdgeInsets.only(
+                  left: spaceMD, right: spaceMD, bottom: spaceMD),
+              decoration: BoxDecoration(
+                  border: Border.all(color: primaryColor, width: spaceMini / 2),
+                  borderRadius:
+                      const BorderRadius.all(Radius.circular(roundedLG))),
+              child: ListTile(
+                onTap: () => Get.to(const AboutPage()),
+                leading: const FaIcon(FontAwesomeIcons.circleInfo,
+                    color: whiteColor),
+                title: const Text('About',
+                    style: TextStyle(
+                        color: whiteColor, fontWeight: FontWeight.w500)),
+              ),
+            ),
           ],
         ));
   }
