@@ -318,20 +318,29 @@ class StateGetAllInventory extends State<GetAllInventory> {
                               )
                             : Container(
                                 margin: const EdgeInsets.all(spaceSM),
-                                child: IconButton(
-                                  onPressed: () {
+                                child: InkWell(
+                                  onTap: () {
                                     Get.to(EditInventoryPage(id: dt.id));
                                   },
-                                  icon: const FaIcon(
-                                      FontAwesomeIcons.penToSquare),
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    foregroundColor:
-                                        MaterialStateProperty.all(whiteColor),
-                                    side: MaterialStateProperty.all(
-                                        const BorderSide(
-                                            color: warningBG, width: 1.5)),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: spaceSM),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: warningBG, width: 1),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(roundedMD))),
+                                    child: const Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.penToSquare,
+                                            size: textLG,
+                                          )
+                                        ]),
                                   ),
                                 ))),
                     TableCell(

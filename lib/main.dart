@@ -137,6 +137,18 @@ class MyAppState extends State<MyApp> {
             bodyLarge: TextStyle(color: whiteColor),
             bodyMedium: TextStyle(color: whiteColor),
           ),
+          iconTheme: const IconThemeData(
+            color: whiteColor,
+          ),
+          dialogTheme: const DialogTheme(
+            backgroundColor: darkColor,
+            titleTextStyle: TextStyle(
+              color: whiteColor,
+            ),
+            contentTextStyle: TextStyle(
+              color: whiteColor,
+            ),
+          ),
           dataTableTheme: const DataTableThemeData(
               dataTextStyle: TextStyle(color: whiteColor),
               headingTextStyle: TextStyle(

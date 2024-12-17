@@ -37,8 +37,8 @@ class StateFavoriteToogle extends State<FavoriteToogle> {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(spaceSM),
-        child: IconButton(
-          onPressed: () {
+        child: InkWell(
+          onTap: () {
             FavoriteToogleModel dt =
                 FavoriteToogleModel(isFavorite: widget.isFavorite ? 0 : 1);
 
@@ -57,14 +57,22 @@ class StateFavoriteToogle extends State<FavoriteToogle> {
               }
             });
           },
-          icon: const FaIcon(FontAwesomeIcons.heart, color: whiteColor),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-                widget.isFavorite ? dangerBG : Colors.transparent),
-            foregroundColor: MaterialStateProperty.all(whiteColor),
-            side: MaterialStateProperty.all(BorderSide(
-                color: widget.isFavorite ? dangerBG : dangerBG, width: 1.5)),
-          ),
+          child: Container(
+              padding: const EdgeInsets.symmetric(vertical: spaceSM),
+              decoration: BoxDecoration(
+                  color: widget.isFavorite ? dangerBG : Colors.transparent,
+                  border: Border.all(color: dangerBG, width: 1),
+                  borderRadius:
+                      const BorderRadius.all(Radius.circular(roundedMD))),
+              child: const Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.heart,
+                      size: textLG,
+                    )
+                  ])),
         ));
   }
 }

@@ -35,8 +35,8 @@ class StatePropsInventory extends State<PropsInventory> {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(spaceSM),
-        child: IconButton(
-          onPressed: () {
+        child: InkWell(
+          onTap: () {
             Get.dialog(AlertDialog(
               contentPadding: EdgeInsets.zero,
               title: null,
@@ -102,12 +102,21 @@ class StatePropsInventory extends State<PropsInventory> {
               ),
             ));
           },
-          icon: const FaIcon(FontAwesomeIcons.info),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-            foregroundColor: MaterialStateProperty.all(whiteColor),
-            side: MaterialStateProperty.all(
-                const BorderSide(color: primaryColor, width: 1.5)),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: spaceSM),
+            decoration: BoxDecoration(
+                border: Border.all(color: primaryColor, width: 1),
+                borderRadius:
+                    const BorderRadius.all(Radius.circular(roundedMD))),
+            child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.circleInfo,
+                    size: textLG,
+                  )
+                ]),
           ),
         ));
   }

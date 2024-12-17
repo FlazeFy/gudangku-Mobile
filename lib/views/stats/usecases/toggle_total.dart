@@ -119,6 +119,10 @@ class StateToggleTotalState extends State<ToggleTotal> {
                                   'total-inventory-by-room-price-sess',
                                   'last-hit-total-inventory-by-room-item-sess',
                                   'last-hit-total-inventory-by-room-price-sess',
+                                  'total-inventory-by-merk-item-sess',
+                                  'total-inventory-by-merk-price-sess',
+                                  'last-hit-total-inventory-by-merk-item-sess',
+                                  'last-hit-total-inventory-by-merk-price-sess',
                                 ];
                                 for (var el in keys) {
                                   prefs.remove(el);

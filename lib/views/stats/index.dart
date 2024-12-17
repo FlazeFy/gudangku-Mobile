@@ -8,6 +8,7 @@ import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_category.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_favorite.dart';
+import 'package:gudangku/views/stats/usecases/get_total_inventory_by_merk.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_by_room.dart';
 import 'package:gudangku/views/stats/usecases/get_total_report_created_per_month.dart';
 import 'package:gudangku/views/stats/usecases/get_total_report_spending_per_month.dart';
@@ -93,8 +94,9 @@ class StateStatsPageState extends State<StatsPage>
                     child: ListView(
                       children: const [
                         TotalInventoryByCategory(),
-                        TotalInventoryByFavorite(),
                         TotalInventoryByRoom(),
+                        TotalInventoryByFavorite(),
+                        TotalInventoryByMerk(),
                       ],
                     ),
                   ),

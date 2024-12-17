@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/service/commands.dart';
 import 'package:gudangku/modules/component/dialog/failed_dialog.dart';
@@ -36,8 +37,8 @@ class StateSoftDeleteInventory extends State<SoftDeleteInventory> {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(spaceSM),
-        child: IconButton(
-          onPressed: () {
+        child: InkWell(
+          onTap: () {
             Get.dialog(AlertDialog(
               contentPadding: EdgeInsets.zero,
               title: null,
@@ -120,12 +121,21 @@ class StateSoftDeleteInventory extends State<SoftDeleteInventory> {
               ),
             ));
           },
-          icon: const Icon(Icons.delete),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-            foregroundColor: MaterialStateProperty.all(whiteColor),
-            side: MaterialStateProperty.all(
-                const BorderSide(color: dangerBG, width: 1.5)),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: spaceSM),
+            decoration: BoxDecoration(
+                border: Border.all(color: dangerBG, width: 1),
+                borderRadius:
+                    const BorderRadius.all(Radius.circular(roundedMD))),
+            child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.trash,
+                    size: textLG,
+                  )
+                ]),
           ),
         ));
   }

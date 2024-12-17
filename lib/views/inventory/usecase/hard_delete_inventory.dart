@@ -37,8 +37,8 @@ class StateHardDeleteInventory extends State<HardDeleteInventory> {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(spaceSM),
-        child: IconButton(
-          onPressed: () {
+        child: InkWell(
+          onTap: () {
             Get.dialog(AlertDialog(
               contentPadding: EdgeInsets.zero,
               title: null,
@@ -122,12 +122,21 @@ class StateHardDeleteInventory extends State<HardDeleteInventory> {
               ),
             ));
           },
-          icon: const FaIcon(FontAwesomeIcons.fire),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.transparent),
-            foregroundColor: MaterialStateProperty.all(whiteColor),
-            side: MaterialStateProperty.all(
-                const BorderSide(color: dangerBG, width: 1.5)),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: spaceSM),
+            decoration: BoxDecoration(
+                border: Border.all(color: dangerBG, width: 1),
+                borderRadius:
+                    const BorderRadius.all(Radius.circular(roundedMD))),
+            child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.fire,
+                    size: textLG,
+                  )
+                ]),
           ),
         ));
   }
