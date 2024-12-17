@@ -13,6 +13,7 @@ import 'package:gudangku/views/stats/usecases/get_total_inventory_by_room.dart';
 import 'package:gudangku/views/stats/usecases/get_total_inventory_created_per_month.dart';
 import 'package:gudangku/views/stats/usecases/get_total_report_created_per_month.dart';
 import 'package:gudangku/views/stats/usecases/get_total_report_spending_per_month.dart';
+import 'package:gudangku/views/stats/usecases/get_total_report_used_per_month.dart';
 import 'package:gudangku/views/stats/usecases/toggle_total.dart';
 
 class StatsPage extends StatefulWidget {
@@ -106,7 +107,8 @@ class StateStatsPageState extends State<StatsPage>
                       children: const [
                         TotalInventoryCreatedPerMonth(),
                         TotalReportCreatedPerMonth(),
-                        TotalReportSpendingPerMonth()
+                        TotalReportSpendingPerMonth(),
+                        TotalReportUsedPerMonth()
                       ],
                     ),
                   )

@@ -108,3 +108,29 @@ List<StatsTotalReportSpendingModel> statsTotalReportSpendingModelFromJson(
   return List<StatsTotalReportSpendingModel>.from(
       data['data'].map((item) => StatsTotalReportSpendingModel.fromJson(item)));
 }
+
+class StatsTotalReportUsedModel {
+  String ctx;
+  dynamic totalCheckout;
+  dynamic totalWashlist;
+
+  StatsTotalReportUsedModel(
+      {required this.ctx,
+      required this.totalCheckout,
+      required this.totalWashlist});
+
+  factory StatsTotalReportUsedModel.fromJson(Map<dynamic, dynamic> map) {
+    return StatsTotalReportUsedModel(
+      ctx: map["context"],
+      totalCheckout: map["total_checkout"],
+      totalWashlist: map["total_washlist"],
+    );
+  }
+}
+
+List<StatsTotalReportUsedModel> statsTotalReportUsedModelFromJson(
+    String jsonData) {
+  final data = json.decode(jsonData);
+  return List<StatsTotalReportUsedModel>.from(
+      data['data'].map((item) => StatsTotalReportUsedModel.fromJson(item)));
+}
