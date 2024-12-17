@@ -15,6 +15,13 @@ class TwoLineData {
   final String text;
 }
 
+class OneLineData {
+  OneLineData(this.xData, this.yData, [this.text = ""]);
+  final String xData;
+  final num yData;
+  final String text;
+}
+
 class QueriesPieChartModel {
   String ctx;
   int total;
@@ -57,6 +64,25 @@ List<StatsTotalReportCreatedModel> statsTotalReportCreatedModelFromJson(
   final data = json.decode(jsonData);
   return List<StatsTotalReportCreatedModel>.from(
       data['data'].map((item) => StatsTotalReportCreatedModel.fromJson(item)));
+}
+
+class StatsTotalInventoryCreatedModel {
+  String ctx;
+  int total;
+
+  StatsTotalInventoryCreatedModel({required this.ctx, required this.total});
+
+  factory StatsTotalInventoryCreatedModel.fromJson(Map<dynamic, dynamic> map) {
+    return StatsTotalInventoryCreatedModel(
+        ctx: map["context"], total: map["total"]);
+  }
+}
+
+List<StatsTotalInventoryCreatedModel> statsTotalInventoryCreatedModelFromJson(
+    String jsonData) {
+  final data = json.decode(jsonData);
+  return List<StatsTotalInventoryCreatedModel>.from(data['data']
+      .map((item) => StatsTotalInventoryCreatedModel.fromJson(item)));
 }
 
 class StatsTotalReportSpendingModel {
