@@ -67,11 +67,8 @@ class StateGetAllDctByType extends State<GetAllDctByType> {
           margin: const EdgeInsets.only(bottom: spaceSM),
           child: DropdownButtonFormField2<String>(
             isExpanded: true,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(vertical: spaceMD),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(roundedMD),
-                  borderSide: const BorderSide(color: primaryColor)),
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: spaceMD),
             ),
             hint: const Text(
               'Select Total Type',

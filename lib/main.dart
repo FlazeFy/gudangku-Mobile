@@ -132,30 +132,41 @@ class MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'GudangKu',
       theme: ThemeData(
-          scaffoldBackgroundColor: darkColor,
-          textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: whiteColor),
-            bodyMedium: TextStyle(color: whiteColor),
-          ),
-          iconTheme: const IconThemeData(
+        scaffoldBackgroundColor: darkColor,
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: whiteColor),
+          bodyMedium: TextStyle(color: whiteColor),
+        ),
+        iconTheme: const IconThemeData(
+          color: whiteColor,
+        ),
+        dialogTheme: const DialogTheme(
+          backgroundColor: darkColor,
+          titleTextStyle: TextStyle(
             color: whiteColor,
           ),
-          dialogTheme: const DialogTheme(
-            backgroundColor: darkColor,
-            titleTextStyle: TextStyle(
-              color: whiteColor,
-            ),
-            contentTextStyle: TextStyle(
-              color: whiteColor,
-            ),
+          contentTextStyle: TextStyle(
+            color: whiteColor,
           ),
-          dataTableTheme: const DataTableThemeData(
-              dataTextStyle: TextStyle(color: whiteColor),
-              headingTextStyle: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: spaceMini / 2.2,
-                  fontSize: textLG))),
+        ),
+        dataTableTheme: const DataTableThemeData(
+            dataTextStyle: TextStyle(color: whiteColor),
+            headingTextStyle: TextStyle(
+                color: primaryColor,
+                fontWeight: FontWeight.w600,
+                letterSpacing: spaceMini / 2.2,
+                fontSize: textLG)),
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(roundedMD),
+            borderSide: const BorderSide(color: primaryColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(roundedMD),
+            borderSide: const BorderSide(color: successBG, width: 1.5),
+          ),
+        ),
+      ),
       home: const LoginPage(),
     );
   }

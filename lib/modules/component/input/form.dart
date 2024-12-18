@@ -46,14 +46,6 @@ class ComponentInput extends StatelessWidget {
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             hintText: hinttext,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(width: 1, color: primaryColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(width: 2.5, color: successBG),
-            ),
           ),
         ),
       );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gudangku/modules/api/report/model/queries.dart';
 import 'package:gudangku/modules/api/report/service/queries.dart';
 import 'package:gudangku/modules/component/appbar.dart';
+import 'package:gudangku/modules/component/button.dart';
 import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
 import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/global.dart';
@@ -9,6 +11,7 @@ import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/detail_report/usecases/delete_report.dart';
 import 'package:gudangku/views/detail_report/usecases/get_detail_report.dart';
 import 'package:gudangku/views/detail_report/usecases/get_items_report.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailReportPage extends StatefulWidget {
   const DetailReportPage({Key? key, required this.id}) : super(key: key);
@@ -24,6 +27,7 @@ class StateDetailReportPageState extends State<DetailReportPage> {
   List<InventoryReportModel> items = [];
   late ReportDetailModel detail;
   bool isLoading = false;
+  String viewType = "catalog";
 
   @override
   void initState() {
@@ -37,6 +41,8 @@ class StateDetailReportPageState extends State<DetailReportPage> {
       isLoading = true;
     });
     var data = await apiReportQuery.getDetailReport(widget.id);
+    final prefs = await SharedPreferences.getInstance();
+    viewType = prefs.getString('toogle_edit_report') ?? "false";
     setState(() {
       detail = data?['detail'];
       items = data?['items'];
@@ -67,11 +73,39 @@ class StateDetailReportPageState extends State<DetailReportPage> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [DeleteReport(id: detail.id)],
+              children: [
+                InkWell(
+                  onTap: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setString('toogle_edit_report',
+                        viewType == 'false' ? 'true' : 'false');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DetailReportPage(id: widget.id)),
+                    );
+                  },
+                  child: ComponentButton(
+                    type: viewType == 'false'
+                        ? 'button_primary'
+                        : 'button_danger',
+                    text: "${viewType == 'false' ? 'Open' : 'Close'} Edit",
+                    icon: FaIcon(
+                      viewType == 'false'
+                          ? FontAwesomeIcons.penToSquare
+                          : FontAwesomeIcons.xmark,
+                      color: whiteColor,
+                      size: textMD,
+                    ),
+                  ),
+                ),
+                DeleteReport(id: detail.id)
+              ],
             ),
-            const Divider(),
             const SizedBox(height: spaceMD),
-            GetDetailReport(data: detail),
+            GetDetailReport(
+                isEdit: viewType == 'false' ? false : true, data: detail),
             const SizedBox(height: spaceMD),
             GetItemsReport(
                 data: items,

@@ -34,7 +34,7 @@ class StateInventoryPageState extends State<InventoryPage> {
       isLoading = true;
     });
     final prefs = await SharedPreferences.getInstance();
-    viewType = prefs.getString('inventory_view_type') ?? "catalog";
+    viewType = prefs.getString('toogle_view_inventory') ?? "catalog";
     setState(() {
       isLoading = false;
     });
@@ -91,7 +91,7 @@ class StateInventoryPageState extends State<InventoryPage> {
                 InkWell(
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
-                    await prefs.setString('inventory_view_type',
+                    await prefs.setString('toogle_view_inventory',
                         viewType == 'catalog' ? 'table' : 'catalog');
                     Navigator.push(
                       context,
