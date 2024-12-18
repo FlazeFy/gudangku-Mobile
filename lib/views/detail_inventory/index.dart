@@ -31,7 +31,7 @@ class StateEditInventoryPageState extends State<EditInventoryPage> {
                   Get.to(CustomDocPage(id: widget.id, type: "inventory"));
                 },
                 icon: const FaIcon(
-                  FontAwesomeIcons.penToSquare,
+                  FontAwesomeIcons.print,
                   color: whiteColor,
                 ))
           ],

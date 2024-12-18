@@ -24,7 +24,7 @@ class StateCustomDocPageState extends State<CustomDocPage> {
           extraButton: [getRestTimeDialog('Dictionary', dctFetchRestTime)],
         ),
         body: ListView(
-          children: [EditorSection(id: widget.id, type: widget.type)],
+          children: [GenerateDocSection(id: widget.id, type: widget.type)],
         ));
   }
 }

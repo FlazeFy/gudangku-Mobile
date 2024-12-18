@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
 
-class EditorSection extends StatefulWidget {
-  const EditorSection({Key? key, required this.id, required this.type})
+class GenerateDocSection extends StatefulWidget {
+  const GenerateDocSection({Key? key, required this.id, required this.type})
       : super(key: key);
   final String id;
   final String type;
 
   @override
-  StateEditorSectionState createState() => StateEditorSectionState();
+  State<GenerateDocSection> createState() => _GenerateDocSectionState();
 }
 
-class StateEditorSectionState extends State<EditorSection> {
+class _GenerateDocSectionState extends State<GenerateDocSection> {
   InventoryQueriesService? apiService;
 
   @override
@@ -25,7 +26,7 @@ class StateEditorSectionState extends State<EditorSection> {
   Widget build(BuildContext context) {
     return SafeArea(
       maintainBottomViewPadding: false,
-      child: FutureBuilder(
+      child: FutureBuilder<String?>(
         future: apiService?.getDetailDoc(widget.id),
         builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
           if (snapshot.hasError) {
@@ -33,10 +34,11 @@ class StateEditorSectionState extends State<EditorSection> {
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            String? contents = snapshot.data;
-
-            return _buildListView(contents);
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
+            return _buildHtmlView(snapshot.data);
           } else {
             return const SizedBox();
           }
@@ -45,7 +47,21 @@ class StateEditorSectionState extends State<EditorSection> {
     );
   }
 
-  Widget _buildListView(String? dt) {
-    return SizedBox(height: Get.height, child: const Column(children: []));
+  Widget _buildHtmlView(String? dt) {
+    return Html(
+      style: {
+        "body": Style(
+          padding: HtmlPaddings(
+            left: HtmlPadding(spaceMD),
+            right: HtmlPadding(spaceMD),
+            top: HtmlPadding(spaceMD),
+            bottom: HtmlPadding(spaceMD),
+          ),
+          color: Colors.black,
+          backgroundColor: whiteColor,
+        ),
+      },
+      data: dt ?? "<p>No content available</p>",
+    );
   }
 }
