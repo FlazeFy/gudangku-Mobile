@@ -11,13 +11,17 @@ class ComponentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (type == 'button_tag') {
+    if (type == 'button_tag' || type == 'button_tag_secondary') {
       return Container(
         padding: const EdgeInsets.symmetric(
             horizontal: spaceMD, vertical: spaceMini),
-        decoration: const BoxDecoration(
-            color: successBG,
-            borderRadius: BorderRadius.all(Radius.circular(roundedLG))),
+        decoration: BoxDecoration(
+            color: type == 'button_tag'
+                ? successBG
+                : type == 'button_tag_secondary'
+                    ? primaryColor
+                    : dangerBG,
+            borderRadius: const BorderRadius.all(Radius.circular(roundedLG))),
         child: Text(text,
             style: const TextStyle(
                 color: whiteColor,

@@ -49,6 +49,20 @@ String getLocalConvertedDate(String date) {
   return DateFormat('yyyy-MM-dd HH:mm:ss').format(localDateTime);
 }
 
+String numberFormat(int number) {
+  String numberStr = number.toString();
+  StringBuffer buffer = StringBuffer();
+
+  for (int i = 0; i < numberStr.length; i++) {
+    if (i > 0 && (numberStr.length - i) % 3 == 0) {
+      buffer.write('.');
+    }
+    buffer.write(numberStr[i]);
+  }
+
+  return buffer.toString();
+}
+
 getItemTimeString(date) {
   if (date != null) {
     //Initial variable.

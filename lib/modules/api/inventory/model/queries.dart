@@ -5,7 +5,7 @@ class InventoryAllModel {
   String inventoryName;
   String inventoryCategory;
   String? inventoryDesc;
-  String inventoryMerk;
+  String? inventoryMerk;
   String inventoryRoom;
   String? inventoryStorage;
   String? inventoryRack;
@@ -26,7 +26,7 @@ class InventoryAllModel {
     required this.inventoryName,
     required this.inventoryCategory,
     this.inventoryDesc,
-    required this.inventoryMerk,
+    this.inventoryMerk,
     required this.inventoryRoom,
     this.inventoryStorage,
     this.inventoryRack,

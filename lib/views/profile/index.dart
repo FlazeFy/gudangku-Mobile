@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/component/appbar.dart';
 import 'package:gudangku/modules/component/dialog/rest_time_dialog.dart';
-import 'package:gudangku/modules/component/footerbar.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/about/index.dart';
