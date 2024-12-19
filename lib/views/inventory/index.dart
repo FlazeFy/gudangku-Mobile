@@ -8,6 +8,7 @@ import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/modules/helpers/converter.dart';
 import 'package:gudangku/views/add_inventory/index.dart';
+import 'package:gudangku/views/inventory/usecase/filter.dart';
 import 'package:gudangku/views/inventory/usecase/get_all_inventory.dart';
 import 'package:gudangku/views/stats/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -113,6 +114,8 @@ class StateInventoryPageState extends State<InventoryPage> {
                 )
               ],
             ),
+            const SizedBox(height: spaceMD),
+            const FilterInventory(),
             const SizedBox(height: spaceMD),
             GetAllInventory(
               viewType: viewType,

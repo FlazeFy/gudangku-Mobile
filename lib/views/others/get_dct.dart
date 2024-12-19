@@ -7,10 +7,11 @@ import 'package:gudangku/modules/helpers/converter.dart';
 
 class GetAllDctByType extends StatefulWidget {
   const GetAllDctByType(
-      {super.key, required this.type, this.action, required this.selected});
-  final String type;
+      {super.key, this.type, this.action, required this.selected, this.dct});
+  final String? type;
   final String selected;
   final dynamic action;
+  final List<DctModel>? dct;
 
   @override
   StateGetAllDctByType createState() => StateGetAllDctByType();
@@ -33,13 +34,29 @@ class StateGetAllDctByType extends State<GetAllDctByType> {
 
   Future<void> _fetchData() async {
     try {
-      dt = await apiHistoryQuery.getDctByType(widget.type);
-      dt.add(DctModel(dctName: '-'));
+      List<DctModel> apiData = [];
+      List<DctModel> providedData = [];
+
+      if (widget.type != null) {
+        apiData = await apiHistoryQuery.getDctByType(widget.type!);
+      }
+      if (widget.dct != null) {
+        providedData = List<DctModel>.from(widget.dct!);
+      }
+
+      dt = [
+        ...apiData,
+        ...providedData,
+        DctModel(dctName: '-'),
+      ];
+
+      dt = dt.toSet().toList();
+
       if (!dt.any((element) => element.dctName == selectedValue)) {
         selectedValue = null;
       }
     } catch (e) {
-      // print('Error fetching data: $e');
+      debugPrint('Error fetching data: $e');
     } finally {
       setState(() {
         isLoading = false;
@@ -64,57 +81,58 @@ class StateGetAllDctByType extends State<GetAllDctByType> {
   Widget _buildListView(List<DctModel> data) {
     if (data.isNotEmpty) {
       return Container(
-          margin: const EdgeInsets.only(bottom: spaceSM),
-          child: DropdownButtonFormField2<String>(
-            isExpanded: true,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: spaceMD),
+        margin: const EdgeInsets.only(bottom: spaceSM),
+        child: DropdownButtonFormField2<String>(
+          isExpanded: true,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: spaceMD),
+          ),
+          hint: const Text(
+            'Select Total Type',
+            style: TextStyle(fontSize: textMD, color: whiteColor),
+          ),
+          value: selectedValue,
+          items: data
+              .map((item) => DropdownMenuItem<String>(
+                    value: item.dctName,
+                    child: Text(
+                      ucAll(item.dctName),
+                      style:
+                          const TextStyle(fontSize: textMD, color: whiteColor),
+                    ),
+                  ))
+              .toList(),
+          validator: (value) {
+            if (value == null) {
+              return 'Please select total type';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value;
+            });
+            widget.action(value);
+          },
+          iconStyleData: const IconStyleData(
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: whiteColor,
             ),
-            hint: const Text(
-              'Select Total Type',
-              style: TextStyle(fontSize: textMD, color: whiteColor),
-            ),
-            value: selectedValue,
-            items: data
-                .map((item) => DropdownMenuItem<String>(
-                      value: item.dctName,
-                      child: Text(
-                        ucAll(item.dctName),
-                        style: const TextStyle(
-                            fontSize: textMD, color: whiteColor),
-                      ),
-                    ))
-                .toList(),
-            validator: (value) {
-              if (value == null) {
-                return 'Please select total type';
-              }
-              return null;
-            },
-            onChanged: (value) {
-              setState(() {
-                selectedValue = value;
-              });
-              widget.action(value);
-            },
-            iconStyleData: const IconStyleData(
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: whiteColor,
-              ),
-              iconSize: textJumbo,
-            ),
-            dropdownStyleData: DropdownStyleData(
-              decoration: BoxDecoration(
-                  color: darkColor,
-                  borderRadius: BorderRadius.circular(roundedLG),
-                  border: Border.all(
-                      color: whiteColor.withOpacity(0.75), width: 1)),
-            ),
-            menuItemStyleData: const MenuItemStyleData(
-              padding: EdgeInsets.symmetric(horizontal: spaceMD),
-            ),
-          ));
+            iconSize: textJumbo,
+          ),
+          dropdownStyleData: DropdownStyleData(
+            decoration: BoxDecoration(
+                color: darkColor,
+                borderRadius: BorderRadius.circular(roundedLG),
+                border:
+                    Border.all(color: whiteColor.withOpacity(0.75), width: 1)),
+          ),
+          menuItemStyleData: const MenuItemStyleData(
+            padding: EdgeInsets.symmetric(horizontal: spaceMD),
+          ),
+        ),
+      );
     } else {
       return const Text("Unknown error, please contact the admin");
     }
