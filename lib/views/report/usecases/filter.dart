@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gudangku/modules/api/dictionary/model/queries.dart';
-import 'package:gudangku/modules/api/inventory/service/commands.dart';
 import 'package:gudangku/modules/component/input/form.dart';
 import 'package:gudangku/modules/component/input/label.dart';
 import 'package:gudangku/modules/component/text.dart';

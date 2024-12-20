@@ -159,3 +159,26 @@ List<InventoryCalendarModel> inventoryCalendarModelFromJson(String jsonData) {
   return List<InventoryCalendarModel>.from(
       data['data'].map((item) => InventoryCalendarModel.fromJson(item)));
 }
+
+class NotificationModel {
+  String reminderDesc;
+  String lastExecute;
+
+  NotificationModel({
+    required this.reminderDesc,
+    required this.lastExecute,
+  });
+
+  factory NotificationModel.fromJson(Map<String, dynamic> map) {
+    return NotificationModel(
+      reminderDesc: map["reminder_desc"],
+      lastExecute: map["last_execute"],
+    );
+  }
+}
+
+List<NotificationModel> notificationModelFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<NotificationModel>.from(
+      data['data']['data'].map((item) => NotificationModel.fromJson(item)));
+}

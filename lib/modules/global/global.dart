@@ -12,6 +12,7 @@ int selectedStatsTabIndex = 0;
 // Content - Pagination
 int pageMyInventory = 1;
 int pageAllHistory = 1;
+int pageAllNotification = 1;
 
 // Content - Select
 String statsType = 'item';
@@ -37,3 +38,5 @@ int dctFetchRestTime = 300; // in second
 int historyFetchRestTime = 60; // in second
 int profileFetchRestTime = 60; // in second
 int statsFetchRestTime = 120; // in second
+int notificationFetchRestTime = 120; // in second
+

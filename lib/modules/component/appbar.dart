@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/views/notification/index.dart';
 
 class ComponentAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -21,7 +22,9 @@ class ComponentAppBar extends StatelessWidget implements PreferredSizeWidget {
       IconButton(
         icon: const FaIcon(FontAwesomeIcons.bell),
         tooltip: 'Notification',
-        onPressed: () {},
+        onPressed: () {
+          Get.to(const NotificationPage());
+        },
         color: whiteColor,
       ),
       isSubMenu
