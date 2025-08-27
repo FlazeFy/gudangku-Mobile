@@ -49,6 +49,7 @@ dependencies:
   url_launcher: ^6.1.14
   flutter_html: ^3.0.0-beta.2
   art_sweetalert: ^0.0.5
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

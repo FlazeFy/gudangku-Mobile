@@ -8,6 +8,7 @@ import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/about/index.dart';
 import 'package:gudangku/views/history/index.dart';
 import 'package:gudangku/views/profile/usecases/get_my_profile.dart';
+import 'package:gudangku/views/profile/usecases/post_sign_out.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -62,6 +63,7 @@ class StateProfilePageState extends State<ProfilePage> {
                         color: whiteColor, fontWeight: FontWeight.w500)),
               ),
             ),
+            const PostSignOut()
           ],
         ));
   }

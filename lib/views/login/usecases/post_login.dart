@@ -18,12 +18,12 @@ class PostLogin extends StatefulWidget {
 class _PostLoginState extends State<PostLogin> {
   TextEditingController usernameCtrl = TextEditingController();
   TextEditingController passCtrl = TextEditingController();
-  late LoginCommandsService apiService;
+  late AuthCommandsService apiService;
 
   @override
   void initState() {
     super.initState();
-    apiService = LoginCommandsService();
+    apiService = AuthCommandsService();
   }
 
   @override

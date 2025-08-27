@@ -4,7 +4,7 @@ import 'package:gudangku/modules/api/auth/model/commands.dart';
 import 'package:http/http.dart' show Client;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginCommandsService {
+class AuthCommandsService {
   final String baseUrl = "http://10.0.2.2:8000";
   Client client = Client();
 
@@ -46,6 +46,38 @@ class LoginCommandsService {
     } else {
       return [
         {"message": "failed", "body": "Unknown error", "token": null}
+      ];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> postSignOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+    final response = await client.get(
+      Uri.parse("$baseUrl/api/v1/logout"),
+      headers: header,
+    );
+
+    var responseData = jsonDecode(response.body);
+    print(responseData);
+
+    if (response.statusCode == 200 || response.statusCode == 401) {
+      final prefs = await SharedPreferences.getInstance();
+
+      return [
+        {
+          "status": "success",
+          "message": responseData['message'],
+        }
+      ];
+    } else {
+      return [
+        {"status": "failed", "message": "Unknown error"}
       ];
     }
   }
