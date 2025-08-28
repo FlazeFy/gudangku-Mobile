@@ -64,7 +64,6 @@ class AuthCommandsService {
     );
 
     var responseData = jsonDecode(response.body);
-    print(responseData);
 
     if (response.statusCode == 200 || response.statusCode == 401) {
       final prefs = await SharedPreferences.getInstance();

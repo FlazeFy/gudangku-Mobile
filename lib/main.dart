@@ -2,8 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:gudangku/modules/api/user/model/commands.dart';
+import 'package:gudangku/modules/api/user/service/commands.dart';
+import 'package:gudangku/modules/component/background/loading.dart';
+import 'package:gudangku/modules/component/navbar.dart';
 import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
+import 'package:gudangku/modules/helpers/generator.dart';
 import 'package:gudangku/views/login/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -62,9 +67,13 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  UserCommandsService? userService;
+
   @override
   void initState() {
     super.initState();
+    userService = UserCommandsService();
+
     var initializationSettingsAndroid =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
@@ -128,46 +137,72 @@ class MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'GudangKu',
-      theme: ThemeData(
-        scaffoldBackgroundColor: darkColor,
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: whiteColor),
-          bodyMedium: TextStyle(color: whiteColor),
-        ),
-        iconTheme: const IconThemeData(
-          color: whiteColor,
-        ),
-        dialogTheme: const DialogTheme(
-          backgroundColor: darkColor,
-          titleTextStyle: TextStyle(
+    Widget getApp(Widget destination) {
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'GudangKu',
+        theme: ThemeData(
+          scaffoldBackgroundColor: darkColor,
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: whiteColor),
+            bodyMedium: TextStyle(color: whiteColor),
+          ),
+          iconTheme: const IconThemeData(
             color: whiteColor,
           ),
-          contentTextStyle: TextStyle(
-            color: whiteColor,
+          dialogTheme: const DialogTheme(
+            backgroundColor: darkColor,
+            titleTextStyle: TextStyle(
+              color: whiteColor,
+            ),
+            contentTextStyle: TextStyle(
+              color: whiteColor,
+            ),
+          ),
+          dataTableTheme: const DataTableThemeData(
+              dataTextStyle: TextStyle(color: whiteColor),
+              headingTextStyle: TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: spaceMini / 2.2,
+                  fontSize: textLG)),
+          inputDecorationTheme: InputDecorationTheme(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(roundedMD),
+              borderSide: const BorderSide(color: primaryColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(roundedMD),
+              borderSide: const BorderSide(color: successBG, width: 1.5),
+            ),
           ),
         ),
-        dataTableTheme: const DataTableThemeData(
-            dataTextStyle: TextStyle(color: whiteColor),
-            headingTextStyle: TextStyle(
-                color: primaryColor,
-                fontWeight: FontWeight.w600,
-                letterSpacing: spaceMini / 2.2,
-                fontSize: textLG)),
-        inputDecorationTheme: InputDecorationTheme(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(roundedMD),
-            borderSide: const BorderSide(color: primaryColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(roundedMD),
-            borderSide: const BorderSide(color: successBG, width: 1.5),
-          ),
-        ),
-      ),
-      home: const LoginPage(),
-    );
+        home: const LoginPage(),
+      );
+    }
+
+    if (widget.signed) {
+      return FutureBuilder<String?>(
+        future: FirebaseMessaging.instance.getToken(),
+        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingScreen(text: "Loading...");
+          }
+          if (snapshot.hasData) {
+            String tokens = snapshot.data!;
+            String timezone = getDeviceTimeZoneOffset();
+            TimezoneFCMModel data =
+                TimezoneFCMModel(firebaseFCMToken: tokens, timezone: timezone);
+            userService?.putFirebase(data);
+
+            return getApp(const BottomBar());
+          } else {
+            return const LoadingScreen(text: "Fetching token...");
+          }
+        },
+      );
+    } else {
+      return getApp(const LoginPage());
+    }
   }
 }
