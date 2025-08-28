@@ -31,6 +31,7 @@ const double spaceMini = 4;
 
 // Color Palette
 const Color successBG = Color(0xFF00C363);
+const Color successLightBG = Color(0xFFd1e7dd);
 const Color dangerBG = Color(0xFFDD0022);
 const Color warningBG = Color(0xFFFFC352);
 const Color infoBG = Color(0xFF009FF9);

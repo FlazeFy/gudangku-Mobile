@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gudangku/modules/global/style.dart';
 
 class ComponentButton extends StatelessWidget {
   final String type;
   final String text;
   final dynamic icon;
+  final dynamic action;
 
   const ComponentButton(
-      {super.key, required this.type, required this.text, this.icon});
+      {super.key,
+      required this.type,
+      required this.text,
+      this.icon,
+      this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +109,20 @@ class ComponentButton extends StatelessWidget {
                   ),
                 ],
               )));
+    } else if (type == 'button_tile') {
+      return Container(
+        margin: const EdgeInsets.only(
+            left: spaceMD, right: spaceMD, bottom: spaceMD),
+        decoration: BoxDecoration(
+            border: Border.all(color: primaryColor, width: spaceMini / 2),
+            borderRadius: const BorderRadius.all(Radius.circular(roundedLG))),
+        child: ListTile(
+          onTap: action,
+          leading: FaIcon(icon, color: whiteColor),
+          title: Text(text,
+              style: TextStyle(color: whiteColor, fontWeight: FontWeight.w500)),
+        ),
+      );
     } else {
       return const Text("Default Title");
     }

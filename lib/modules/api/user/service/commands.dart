@@ -86,4 +86,54 @@ class UserCommandsService {
       ];
     }
   }
+
+  Future generateQRCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final responsePost = await client.post(Uri.parse("$emuUrl/api/v1/lend/qr"),
+        headers: header, body: json.encode({'qr_period': 6}));
+
+    var responsePostData = jsonDecode(responsePost.body);
+
+    if (responsePost.statusCode == 201) {
+      final responseGet = await client.get(Uri.parse("$emuUrl/api/v1/lend/qr"),
+          headers: header);
+      var responseGetData = jsonDecode(responseGet.body);
+
+      if (responseGet.statusCode == 200) {
+        return [
+          {
+            "status": "success",
+            "data": responseGetData["data"],
+          }
+        ];
+      } else {
+        return [
+          {
+            "status": "failed",
+            "message": responseGetData["message"],
+          }
+        ];
+      }
+    } else if (responsePost.statusCode == 422 ||
+        responsePost.statusCode == 401) {
+      return [
+        {"status": "failed", "message": responsePostData['message']}
+      ];
+    } else {
+      return [
+        {
+          "status": "failed",
+          "message": "Unknown error, please contact the admin".tr
+        }
+      ];
+    }
+  }
 }
