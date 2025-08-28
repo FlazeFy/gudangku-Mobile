@@ -18,3 +18,22 @@ String timezoneFCMModelToJson(TimezoneFCMModel data) {
   final jsonData = data.toJson();
   return json.encode(jsonData);
 }
+
+class UpdateProfileModel {
+  String email;
+  String username;
+
+  UpdateProfileModel({required this.email, required this.username});
+
+  Map<dynamic, dynamic> toJson() {
+    return {
+      "email": email,
+      "username": username,
+    };
+  }
+}
+
+String updateProfileModelToJson(UpdateProfileModel data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
+}

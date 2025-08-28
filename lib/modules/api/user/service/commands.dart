@@ -31,19 +31,57 @@ class UserCommandsService {
     if (response.statusCode == 200) {
       return [
         {
-          "message": "success",
-          "body": responseData["message"],
+          "status": "success",
+          "message": responseData["message"],
         }
       ];
     } else if (response.statusCode == 422 || response.statusCode == 401) {
       return [
-        {"message": "failed", "body": responseData['result']}
+        {"status": "failed", "message": responseData['message']}
       ];
     } else {
       return [
         {
-          "message": "failed",
-          "body": "Unknown error, please contact the admin".tr
+          "status": "failed",
+          "message": "Unknown error, please contact the admin".tr
+        }
+      ];
+    }
+  }
+
+  Future putUpdateProfile(UpdateProfileModel data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+
+    final header = {
+      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.put(
+        Uri.parse("$emuUrl/api/v1/user/update_profile"),
+        headers: header,
+        body: updateProfileModelToJson(data));
+
+    var responseData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return [
+        {
+          "status": "success",
+          "message": responseData["message"],
+        }
+      ];
+    } else if (response.statusCode == 422 || response.statusCode == 401) {
+      return [
+        {"status": "failed", "message": responseData['message']}
+      ];
+    } else {
+      return [
+        {
+          "status": "failed",
+          "message": "Unknown error, please contact the admin".tr
         }
       ];
     }
