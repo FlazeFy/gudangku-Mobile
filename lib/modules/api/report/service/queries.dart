@@ -28,6 +28,27 @@ class ReportQueriesService {
     }
   }
 
+  Future<List<ReportModel>?> getReportByInventoryId(
+      String inventoryName, String id, int page) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token_key');
+    final header = {
+      'Accept': 'application/json',
+      'Authorization': "Bearer $token",
+    };
+
+    final response = await client.get(
+        Uri.parse("$emuUrl/api/v1/report/$inventoryName/$id?page=$page"),
+        headers: header);
+    if (response.statusCode == 200) {
+      return reportModelFromJson(response.body);
+    } else if (response.statusCode == 404) {
+      return [];
+    } else {
+      return null;
+    }
+  }
+
   Future<Map<String, dynamic>?> getDetailReport(String id) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token_key');

@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:gudangku/modules/api/inventory/model/commands.dart';
 import 'package:gudangku/modules/api/inventory/model/queries.dart';
 import 'package:gudangku/modules/api/inventory/service/queries.dart';
+import 'package:gudangku/modules/api/report/model/queries.dart';
 import 'package:gudangku/modules/component/input/form.dart';
 import 'package:gudangku/modules/component/input/label.dart';
 import 'package:gudangku/modules/component/others.dart';
 import 'package:gudangku/modules/component/text.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/detail_inventory/usecases/get_reminder.dart';
+import 'package:gudangku/views/detail_inventory/usecases/get_report_by_inventory.dart';
 import 'package:gudangku/views/detail_inventory/usecases/post_reminder.dart';
 import 'package:gudangku/views/others/get_dct.dart';
 
@@ -244,6 +246,8 @@ class StateGetDetailInventory extends State<GetDetailInventory> {
                 inventoryName: detail.inventoryName,
               ),
         const ComponentText(type: 'page_title', text: "Report"),
+        GetReportByInventoryId(
+            inventoryName: detail.inventoryName, inventoryId: widget.id)
       ],
     );
   }
