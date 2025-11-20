@@ -5,6 +5,7 @@ import 'package:gudangku/modules/component/others.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/about/index.dart';
 import 'package:gudangku/views/features/index.dart';
+import 'package:gudangku/views/help/index.dart';
 import 'package:gudangku/views/login/index.dart';
 
 class FooterBar extends StatefulWidget {
@@ -28,20 +29,17 @@ class FooterBarState extends State<FooterBar> {
           children: [
             InkWell(
               child:
-                  const ComponentButton(type: 'button_text', text: 'Landing'),
-              onTap: () {
-                Get.to(const LoginPage());
-              },
-            ),
-            InkWell(
-              child:
                   const ComponentButton(type: 'button_text', text: 'Features'),
               onTap: () {
                 Get.to(const FeaturePage());
               },
             ),
-            const ComponentButton(type: 'button_text', text: 'FAQs'),
-            const ComponentButton(type: 'button_text', text: 'Help'),
+            InkWell(
+              child: const ComponentButton(type: 'button_text', text: 'Help'),
+              onTap: () {
+                Get.to(const HelpPage());
+              },
+            ),
             InkWell(
               child: const ComponentButton(type: 'button_text', text: 'About'),
               onTap: () {
