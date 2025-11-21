@@ -10,6 +10,7 @@ import 'package:gudangku/modules/global/global.dart';
 import 'package:gudangku/modules/global/style.dart';
 import 'package:gudangku/views/detail_report/usecases/delete_report.dart';
 import 'package:gudangku/views/detail_report/usecases/get_detail_report.dart';
+import 'package:gudangku/views/detail_report/usecases/get_images_report.dart';
 import 'package:gudangku/views/detail_report/usecases/get_items_report.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -106,6 +107,9 @@ class StateDetailReportPageState extends State<DetailReportPage> {
             const SizedBox(height: spaceMD),
             GetDetailReport(
                 isEdit: viewType == 'false' ? false : true, data: detail),
+            const SizedBox(height: spaceMD),
+            GetImagesReport(
+                reportImages: detail.reportImage, onReload: loadData),
             const SizedBox(height: spaceMD),
             GetItemsReport(
                 data: items,

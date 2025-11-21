@@ -50,6 +50,18 @@ List<ReportModel> reportModelFromJson(String jsonData) {
       data['data']['data'].map((item) => ReportModel.fromJson(item)));
 }
 
+class ReportImage {
+  String url;
+
+  ReportImage({required this.url});
+
+  factory ReportImage.fromJson(Map<String, dynamic> map) {
+    return ReportImage(
+      url: map['url'] ?? '',
+    );
+  }
+}
+
 class ReportDetailModel {
   String id;
   String reportTitle;
@@ -63,6 +75,7 @@ class ReportDetailModel {
   String? deletedAt;
   int totalItem;
   int totalPrice;
+  List<ReportImage>? reportImage;
 
   ReportDetailModel({
     required this.id,
@@ -75,6 +88,7 @@ class ReportDetailModel {
     required this.createdBy,
     this.updatedAt,
     this.deletedAt,
+    this.reportImage,
     required this.totalItem,
     required this.totalPrice,
   });
@@ -84,6 +98,9 @@ class ReportDetailModel {
       id: map['id'],
       reportTitle: map['report_title'],
       reportDesc: map['report_desc'] ?? '',
+      reportImage: (map['report_image'] as List<dynamic>? ?? [])
+          .map((img) => ReportImage.fromJson(img))
+          .toList(),
       reportCategory: map['report_category'],
       isReminder: map['is_reminder'],
       remindAt: map['remind_at'] ?? '',

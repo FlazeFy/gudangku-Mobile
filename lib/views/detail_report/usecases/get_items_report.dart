@@ -24,7 +24,7 @@ class StateGetItemsReport extends State<GetItemsReport> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const ComponentText(type: 'page_title', text: "Attached Item"),
+      const ComponentText(type: 'content_title', text: "Attached Item"),
       widget.data.isNotEmpty
           ? SingleChildScrollView(
               scrollDirection: Axis.horizontal,
